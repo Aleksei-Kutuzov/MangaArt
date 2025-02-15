@@ -24,7 +24,7 @@ public class Editor extends AppCompatActivity {
             return insets;
         });
         view = findViewById(R.id.view);
-
-        //setContentView(new EditorDraw(this));
+        setContentView(new EditorDraw(this));
+                //setContentView(new EditorDraw(this), view);
     }
 }
