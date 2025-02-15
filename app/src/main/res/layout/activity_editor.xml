@@ -5,20 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Editor">
 
-    <LinearLayout
+    <View
+        android:id="@+id/view"
         android:layout_width="409dp"
-        android:layout_height="340dp"
-        android:orientation="vertical"
+        android:layout_height="542dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/getToEditir"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_edit" />
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
