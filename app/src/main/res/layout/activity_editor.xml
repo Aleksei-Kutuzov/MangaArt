@@ -27,19 +27,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <Button
-                    android:id="@+id/button5"
+                <ImageView
+                    android:id="@+id/back"
+                    style="@style/ShapeAppearance.Material3.Corner.Full"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:background="?android:attr/textColorLink"
+                    android:fadingEdge="vertical"
+                    app:srcCompat="@android:drawable/ic_menu_revert" />
 
-                <Button
-                    android:id="@+id/button9"
+                <ImageView
+                    android:id="@+id/next"
+                    style="@style/ShapeAppearance.Material3.Corner.Full"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Button" />
+                    android:background="?android:attr/textColorLink"
+                    android:fadingEdge="vertical"
+                    android:rotationY="180"
+                    app:srcCompat="@android:drawable/ic_menu_revert" />
 
                 <Button
                     android:id="@+id/button13"
