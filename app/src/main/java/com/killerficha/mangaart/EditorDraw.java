@@ -10,21 +10,27 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 public class EditorDraw extends View {
-    Paint p = new Paint();
+    Paint p;
     Canvas canvas;
-    Path path = new Path();
+    Path path;
     public EditorDraw (Context context) {
         super(context);
+        p = new Paint();
+        path = new Path();
+        canvas = new Canvas();
+
     }
     @Override
     protected void onDraw(@NonNull Canvas canvas) {
-       // invalidate();
+        super.onDraw(canvas);
+        // invalidate();
+        this.canvas = canvas;
         canvas.drawARGB(255, 255, 255, 255);
+        //canvas.drawCircle(100, 100, 100, p);
+        p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth(12);
         p.setColor(Color.BLACK);
-        //canvas.drawCircle(100, 100, 100, p);
-        //canvas.drawPath(path, p);
-        super.onDraw(canvas);
+        canvas.drawPath(path, p);
     }
 
     @Override
@@ -33,7 +39,6 @@ public class EditorDraw extends View {
         float touchY = event.getY();
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                path.addPath(path);
                 path.moveTo(touchX, touchY);
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -42,12 +47,12 @@ public class EditorDraw extends View {
             case MotionEvent.ACTION_UP:
                 path.moveTo(touchX, touchY);
                 canvas.drawPath(path, p);
-                path.reset();
+                //path.reset();
                 break;
             default:
                 return false;
         }
-        //invalidate();
+        invalidate();
         return true;
     }
 }
