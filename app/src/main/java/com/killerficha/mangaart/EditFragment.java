@@ -29,7 +29,7 @@ public class EditFragment extends Fragment {
 
     // Пример вызова методов для очистки или удаления линии
     public void clearCanvas() {
-        editorDraw.clear();
+        editorDraw.clearCanvas();
     }
 
     public void removeLastLine() {

@@ -95,6 +95,21 @@
                 android:layout_weight="1"
                 android:text="Button" />
         </TableRow>
-    </TableLayout>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <Button
+                android:id="@+id/clearButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Clear Canvas" />
+
+            <Button
+                android:id="@+id/removeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Remove Last Line" />
+        </TableRow>
+    </TableLayout>
 </LinearLayout>

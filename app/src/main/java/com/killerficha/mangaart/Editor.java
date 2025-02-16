@@ -1,6 +1,7 @@
 package com.killerficha.mangaart;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
@@ -8,26 +9,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Editor extends AppCompatActivity {
 
-    private EditorDraw editorDraw; // Объект для рисования
+    private EditorDraw editorDraw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
-        // Получаем ссылку на контейнер FrameLayout
-        FrameLayout drawingContainer = findViewById(R.id.view);
+        FrameLayout frameLayout = findViewById(R.id.view);
+        EditorDraw editorDraw = new EditorDraw(this);
+        frameLayout.addView(editorDraw);
 
-        // Инициализируем EditorDraw и добавляем его в контейнер
-        editorDraw = new EditorDraw(this);
-        drawingContainer.addView(editorDraw);
 
-        // Настроим кнопки для управления холстом
-        Button clearButton = findViewById(R.id.button13);
-        Button removeButton = findViewById(R.id.button17);
+        Button clearButton = findViewById(R.id.clearButton);
+        Button removeButton = findViewById(R.id.removeButton);
 
-        // Настроим действия кнопок
-        clearButton.setOnClickListener(v -> editorDraw.clear());
+        // Очистка холста
+        clearButton.setOnClickListener(v -> editorDraw.clearCanvas());
+
+        // Удаление последней линии
         removeButton.setOnClickListener(v -> editorDraw.removeLastLine());
     }
 }

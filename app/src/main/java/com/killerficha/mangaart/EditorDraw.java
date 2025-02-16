@@ -1,9 +1,11 @@
 package com.killerficha.mangaart;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -12,63 +14,74 @@ import java.util.List;
 
 public class EditorDraw extends View {
 
-    private List<Line> lines = new ArrayList<>();
+    private Bitmap bitmap;
+    private Canvas canvas;
     private Paint paint;
+    private Path path;
+    private List<DrawableObject> objects; // Список для объектов
+
+
+
+
 
     public EditorDraw(Context context) {
         super(context);
         paint = new Paint();
-        paint.setColor(Color.BLACK);  // Цвет линии
-        paint.setStrokeWidth(5);      // Толщина линии
+        paint.setColor(Color.BLACK);
+        paint.setStrokeWidth(10f); // Толщина кисти
+        paint.setStyle(Paint.Style.STROKE);
+        path = new Path();
+        objects = new ArrayList<>();
+
+        // Инициализация bitmap и canvas
+        bitmap = Bitmap.createBitmap(1080, 1920, Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(bitmap);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        // Рисуем все линии
-        for (Line line : lines) {
-            canvas.drawLine(line.startX, line.startY, line.endX, line.endY, paint);
+
+        // Рисуем все объекты на canvas
+        for (DrawableObject object : objects) {
+            object.draw(canvas, paint);
         }
+
+        // Рисуем bitmap на самом view
+        canvas.drawBitmap(bitmap, 0, 0, null);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            // Начало рисования
-            lines.add(new Line(event.getX(), event.getY(), event.getX(), event.getY()));
-        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            // Рисуем линию при движении
-            Line currentLine = lines.get(lines.size() - 1);
-            currentLine.endX = event.getX();
-            currentLine.endY = event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                path.moveTo(event.getX(), event.getY());
+                break;
+            case MotionEvent.ACTION_MOVE:
+                path.lineTo(event.getX(), event.getY());
+                break;
+            case MotionEvent.ACTION_UP:
+                // Добавляем путь в список объектов после завершения рисования
+                objects.add(new LineObject(new Path(path), paint.getColor(), paint.getStrokeWidth()));
+                path.reset(); // Сбросить путь для нового рисования
+                break;
         }
-        invalidate(); // Перерисовываем экран
+        invalidate(); // Перерисовать экран
         return true;
     }
 
-    // Метод для очистки всех линий
-    public void clear() {
-        lines.clear();
-        invalidate(); // Перерисовываем экран
+    // Метод для очистки холста
+    public void clearCanvas() {
+        objects.clear();
+        bitmap.eraseColor(Color.WHITE);
+        invalidate();
     }
 
-    // Метод для удаления последней линии
+    // Метод для удаления последнего нарисованного объекта
     public void removeLastLine() {
-        if (!lines.isEmpty()) {
-            lines.remove(lines.size() - 1); // Удаляем последнюю линию
-            invalidate(); // Перерисовываем экран
-        }
-    }
-
-    // Вспомогательный класс для представления линии
-    private static class Line {
-        float startX, startY, endX, endY;
-
-        Line(float startX, float startY, float endX, float endY) {
-            this.startX = startX;
-            this.startY = startY;
-            this.endX = endX;
-            this.endY = endY;
+        if (!objects.isEmpty()) {
+            objects.remove(objects.size() - 1);
+            invalidate();
         }
     }
 }
