@@ -3,6 +3,8 @@ package com.killerficha.mangaart;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,10 +26,14 @@ public class Editor extends AppCompatActivity {
 
         // Настроим кнопки для управления холстом
         Button clearButton = findViewById(R.id.button13);
-        Button removeButton = findViewById(R.id.button17);
+       // Button removeButton = findViewById(R.id.button17); //это разве не к бек привязывать?
+        ImageView removeButton = findViewById(R.id.back);
+        ImageView restoreButton = findViewById(R.id.next);
 
         // Настроим действия кнопок
         clearButton.setOnClickListener(v -> editorDraw.clear());
         removeButton.setOnClickListener(v -> editorDraw.removeLastLine());
+        restoreButton.setOnClickListener(v -> editorDraw.restoreLastLine());
+
     }
 }

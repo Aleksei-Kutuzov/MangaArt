@@ -13,6 +13,9 @@ import java.util.List;
 public class EditorDraw extends View {
 
     private List<Line> lines = new ArrayList<>();
+
+    private List<Line> deletedlines = new ArrayList<>();
+
     private Paint paint;
 
     public EditorDraw(Context context) {
@@ -55,7 +58,15 @@ public class EditorDraw extends View {
     // Метод для удаления последней линии
     public void removeLastLine() {
         if (!lines.isEmpty()) {
-            lines.remove(lines.size() - 1); // Удаляем последнюю линию
+            deletedlines.add(lines.get(lines.size()-1));
+            lines.remove(lines.size() - 1); // Удаляем последнюю линию (так там же есть метод last)
+            invalidate(); // Перерисовываем экран
+        }
+    }
+    public void restoreLastLine(){
+        if (!deletedlines.isEmpty()) {
+            lines.add(deletedlines.get(deletedlines.size()-1)); //Возвращение последней линии
+            deletedlines.remove(deletedlines.size() - 1); // чистим удалённые
             invalidate(); // Перерисовываем экран
         }
     }
