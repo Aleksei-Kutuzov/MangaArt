@@ -5,99 +5,96 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Editor">
+    tools:context=".Editor"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <!-- Основной контейнер для холста -->
+    <FrameLayout
+        android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <!-- Здесь будет ваш холст для рисования EditorDraw -->
+    </FrameLayout>
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/view"
-            android:name="com.killerficha.mangaart.EditFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+    <!-- Контейнер для кнопок -->
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <TableLayout
+        <!-- Строка с кнопками -->
+        <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TableRow
+            <!-- Кнопки для действий -->
+            <ImageView
+                android:id="@+id/back"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?android:attr/textColorLink"
+                android:fadingEdge="vertical"
+                app:srcCompat="@android:drawable/ic_menu_revert" />
 
-                <ImageView
-                    android:id="@+id/back"
-                    style="@style/ShapeAppearance.Material3.Corner.Full"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?android:attr/textColorLink"
-                    android:fadingEdge="vertical"
-                    app:srcCompat="@android:drawable/ic_menu_revert" />
-
-                <ImageView
-                    android:id="@+id/next"
-                    style="@style/ShapeAppearance.Material3.Corner.Full"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="?android:attr/textColorLink"
-                    android:fadingEdge="vertical"
-                    android:rotationY="180"
-                    app:srcCompat="@android:drawable/ic_menu_revert" />
-
-                <Button
-                    android:id="@+id/button13"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Button" />
-
-                <Button
-                    android:id="@+id/button17"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Button" />
-            </TableRow>
-
-            <TableRow
+            <ImageView
+                android:id="@+id/next"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?android:attr/textColorLink"
+                android:fadingEdge="vertical"
+                android:rotationY="180"
+                app:srcCompat="@android:drawable/ic_menu_revert" />
 
-                <Button
-                    android:id="@+id/button6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Button" />
+            <Button
+                android:id="@+id/button13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Button" />
 
-                <Button
-                    android:id="@+id/button10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Button" />
+            <Button
+                android:id="@+id/button17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Button" />
+        </TableRow>
 
-                <Button
-                    android:id="@+id/button14"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Button" />
+        <!-- Дополнительные кнопки -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/button18"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Button" />
-            </TableRow>
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Button" />
 
-        </TableLayout>
+            <Button
+                android:id="@+id/button10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Button" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/button14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Button" />
+
+            <Button
+                android:id="@+id/button18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Button" />
+        </TableRow>
+    </TableLayout>
 
 </LinearLayout>

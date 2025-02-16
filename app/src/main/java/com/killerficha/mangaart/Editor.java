@@ -1,31 +1,33 @@
 package com.killerficha.mangaart;
 
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class Editor extends AppCompatActivity {
 
-    View view;
+    private EditorDraw editorDraw; // Объект для рисования
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_editor);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-        view = findViewById(R.id.view);
 
+        // Получаем ссылку на контейнер FrameLayout
+        FrameLayout drawingContainer = findViewById(R.id.view);
 
-        //setContentView(new EditorDraw(this));
+        // Инициализируем EditorDraw и добавляем его в контейнер
+        editorDraw = new EditorDraw(this);
+        drawingContainer.addView(editorDraw);
+
+        // Настроим кнопки для управления холстом
+        Button clearButton = findViewById(R.id.button13);
+        Button removeButton = findViewById(R.id.button17);
+
+        // Настроим действия кнопок
+        clearButton.setOnClickListener(v -> editorDraw.clear());
+        removeButton.setOnClickListener(v -> editorDraw.removeLastLine());
     }
 }
