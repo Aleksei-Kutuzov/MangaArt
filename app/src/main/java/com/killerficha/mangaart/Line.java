@@ -1,43 +1,28 @@
 package com.killerficha.mangaart;
 
-import android.graphics.Color;
+import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 
+// Вспомогательный класс для представления линии
 public class Line {
-    private float startX, startY, endX, endY;
-    private Paint paint;
-    private Path path;
+    float startX, startY, endX, endY;
 
-    // Конструктор линии
-    public Line(float startX, float startY, float endX, float endY) {
+    void moveTo(float x, float y) {
+        endX = startX - endX + x;
+        endY = startY - endY + y;
+        startX = x;
+        startY = y;
+    }
+
+    Line(float startX, float startY, float endX, float endY) {
         this.startX = startX;
         this.startY = startY;
         this.endX = endX;
         this.endY = endY;
-
-        // Инициализация кисти (цвет, толщина)
-        paint = new Paint();
-        paint.setColor(Color.BLACK);  // Цвет линии
-        paint.setStrokeWidth(5);      // Толщина линии
-        paint.setStyle(Paint.Style.STROKE);
-
-        path = new Path();
-        path.moveTo(startX, startY);
-        path.lineTo(endX, endY);
     }
 
-    // Метод для рисования линии на холсте
-    public void draw(Paint paint, android.graphics.Canvas canvas) {
-        canvas.drawPath(path, paint);
+    void draw(Canvas canvas, Paint paint){
+        canvas.drawLine(startX, startY, endX, endY, paint);
     }
 
-    // Метод для обновления конечной точки линии (например, для редактирования)
-    public void updateEndPoint(float endX, float endY) {
-        this.endX = endX;
-        this.endY = endY;
-        path.reset();  // Обновим путь
-        path.moveTo(startX, startY);
-        path.lineTo(endX, endY);
-    }
 }

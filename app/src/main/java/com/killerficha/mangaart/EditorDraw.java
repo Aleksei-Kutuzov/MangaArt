@@ -30,7 +30,7 @@ public class EditorDraw extends View {
         super.onDraw(canvas);
         // Рисуем все линии
         for (Line line : lines) {
-            canvas.drawLine(line.startX, line.startY, line.endX, line.endY, paint);
+            line.draw(canvas, paint);
         }
     }
 
@@ -68,18 +68,6 @@ public class EditorDraw extends View {
             lines.add(deletedlines.get(deletedlines.size()-1)); //Возвращение последней линии
             deletedlines.remove(deletedlines.size() - 1); // чистим удалённые
             invalidate(); // Перерисовываем экран
-        }
-    }
-
-    // Вспомогательный класс для представления линии
-    private static class Line {
-        float startX, startY, endX, endY;
-
-        Line(float startX, float startY, float endX, float endY) {
-            this.startX = startX;
-            this.startY = startY;
-            this.endX = endX;
-            this.endY = endY;
         }
     }
 }
