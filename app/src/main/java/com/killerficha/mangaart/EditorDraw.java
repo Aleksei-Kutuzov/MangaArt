@@ -9,12 +9,13 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class EditorDraw extends View {
 
-    private List<Line> lines = new ArrayList<>();
+    private Stack<Line> lines = new Stack<>();
 
-    private List<Line> deletedlines = new ArrayList<>();
+    private Stack<Line> deletedlines = new Stack<>();
 
     private Paint paint;
 
@@ -36,6 +37,7 @@ public class EditorDraw extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        deletedlines.clear();
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             // Начало рисования
             lines.add(new Line(event.getX(), event.getY(), event.getX(), event.getY()));
@@ -51,6 +53,7 @@ public class EditorDraw extends View {
 
     // Метод для очистки всех линий
     public void clear() {
+        deletedlines.addAll(lines);
         lines.clear();
         invalidate(); // Перерисовываем экран
     }
@@ -58,15 +61,15 @@ public class EditorDraw extends View {
     // Метод для удаления последней линии
     public void removeLastLine() {
         if (!lines.isEmpty()) {
-            deletedlines.add(lines.get(lines.size()-1));
-            lines.remove(lines.size() - 1); // Удаляем последнюю линию (так там же есть метод last)
+            deletedlines.push(lines.pop());
+            lines.remove(deletedlines.lastElement()); // Удаляем последнюю линию (так там же есть метод last)
             invalidate(); // Перерисовываем экран
         }
     }
     public void restoreLastLine(){
         if (!deletedlines.isEmpty()) {
-            lines.add(deletedlines.get(deletedlines.size()-1)); //Возвращение последней линии
-            deletedlines.remove(deletedlines.size() - 1); // чистим удалённые
+            lines.push(deletedlines.pop()); //Возвращение последней линии
+            deletedlines.remove(lines.lastElement()); // чистим удалённые
             invalidate(); // Перерисовываем экран
         }
     }

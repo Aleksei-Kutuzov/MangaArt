@@ -1,7 +1,11 @@
 package com.killerficha.mangaart;
 
-public class Instrument {
+import android.view.View;
+
+public class Instrument extends View {
     //по инструментам получается: кисть, палитра, заливка, ластик?
+    Instrument(){
+    }
 
 
 
