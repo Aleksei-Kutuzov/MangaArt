@@ -32,6 +32,12 @@ public class EditFragment extends Fragment {
         editorDraw.clear();
     }
 
+    /*
+    public void setPencilMode() {
+    Instrument.setMode(Instrument.mode_list.PENCIL);
+    }
+    */
+
     public void removeLastLine() {
         editorDraw.removeLastLine();
     }

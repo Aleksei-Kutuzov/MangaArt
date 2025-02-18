@@ -25,15 +25,18 @@ public class Editor extends AppCompatActivity {
         drawingContainer.addView(editorDraw);
 
         // Настроим кнопки для управления холстом
-        Button clearButton = findViewById(R.id.button13);
-       // Button removeButton = findViewById(R.id.button17); //это разве не к бек привязывать?
+        ImageView clearButton = findViewById(R.id.delete);
         ImageView removeButton = findViewById(R.id.back);
         ImageView restoreButton = findViewById(R.id.next);
+       // ImageView pencilButton = findViewById(R.id.pencil);
+
 
         // Настроим действия кнопок
         clearButton.setOnClickListener(v -> editorDraw.clear());
         removeButton.setOnClickListener(v -> editorDraw.removeLastLine());
         restoreButton.setOnClickListener(v -> editorDraw.restoreLastLine());
+        //pencilButton.setOnClickListener(v -> Instrument.setMode(Instrument.mode_list.PENCIL));
+
 
     }
 }
