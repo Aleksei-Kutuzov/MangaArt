@@ -1,10 +1,13 @@
 package com.killerficha.mangaart;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Stack;
 
 public class EditorDraw extends View {
@@ -61,4 +64,15 @@ public class EditorDraw extends View {
             invalidate(); // Перерисовываем экран
         }
     }
+    /*
+    public void save(){
+        try (FileOutputStream out = new FileOutputStream("unnamed.png")) {
+            picture.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+            // PNG is a lossless format, the compression factor (100) is ignored
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+*/
 }
