@@ -25,6 +25,9 @@ class Instrument {
         paint.setStrokeWidth(thickness); // Толщина линии
         paint.setStyle(Paint.Style.STROKE);
 
+        paint.setStrokeCap(Paint.Cap.ROUND); // Круглые концы
+        paint.setStrokeJoin(Paint.Join.ROUND); // Круглые соединения
+
         // Инициализация Paint для ластика
         eraserPaint = new Paint(ANTI_ALIAS_FLAG);
         eraserPaint.setStrokeWidth(thickness); // Толщина ластика
