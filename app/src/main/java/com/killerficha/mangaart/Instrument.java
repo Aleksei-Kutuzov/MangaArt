@@ -47,9 +47,10 @@ class Instrument {
         eraserPaint.setStrokeWidth(thickness); // Обновляем толщину ластика
     }
 
-    int setThickness() {
+    int getThickness() {
         return paint.getHinting();
     }
+
 
     public mode_list getMode() {
         return mode;
@@ -72,7 +73,15 @@ class Instrument {
                     current.lineTo(event.getX(), event.getY());
                 }
             case MARKER:
-                ;
+                paint.setAlpha(paint.getAlpha() / 2);
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Начало рисования
+                    freeLines.add(new FreeLine(event.getX(), event.getY()));
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    // Рисуем линию при движении
+                    DrawableObject current = freeLines.get(freeLines.size() - 1);
+                    current.lineTo(event.getX(), event.getY());
+                };
             case ERASER:
                 ;
             case FILL:

@@ -28,7 +28,8 @@ public class Editor extends AppCompatActivity {
         ImageView clearButton = findViewById(R.id.delete);
         ImageView removeButton = findViewById(R.id.back);
         ImageView restoreButton = findViewById(R.id.next);
-       // ImageView pencilButton = findViewById(R.id.pencil);
+        //ImageView pencilButton = findViewById(R.id.pencil);
+        //ImageView saveButton = findViewById(R.id.save);
 
 
         // Настроим действия кнопок
@@ -36,6 +37,7 @@ public class Editor extends AppCompatActivity {
         removeButton.setOnClickListener(v -> editorDraw.removeLastLine());
         restoreButton.setOnClickListener(v -> editorDraw.restoreLastLine());
         //pencilButton.setOnClickListener(v -> Instrument.setMode(Instrument.mode_list.PENCIL));
+        //saveButton.setOnClickListener(v -> editorDraw.save());
 
 
     }
