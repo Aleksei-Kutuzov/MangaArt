@@ -23,7 +23,7 @@ public class StraightLine extends DrawableObject {
         this.endY = endY;
     }
 
-    public void draw(Canvas canvas, Paint paint){
+    public void draw(Canvas canvas){
         canvas.drawLine(startX, startY, endX, endY, paint);
     }
 

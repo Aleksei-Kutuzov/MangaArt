@@ -1,5 +1,7 @@
 package com.killerficha.mangaart;
 
+import static android.graphics.Paint.ANTI_ALIAS_FLAG;
+
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -18,13 +20,13 @@ class Instrument {
     mode_list mode = mode_list.PENCIL; // по дефолту **PENCIL**
 
     Instrument(int color, int thickness){
-        paint = new Paint();
+        paint = new Paint(ANTI_ALIAS_FLAG); // это сглаживание, но оно может немного снижать производительность
         paint.setColor(color);  // Цвет линии
         paint.setStrokeWidth(thickness); // Толщина линии
         paint.setStyle(Paint.Style.STROKE);
 
         // Инициализация Paint для ластика
-        eraserPaint = new Paint();
+        eraserPaint = new Paint(ANTI_ALIAS_FLAG);
         eraserPaint.setStrokeWidth(thickness); // Толщина ластика
         eraserPaint.setStyle(Paint.Style.STROKE);
         eraserPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR)); // Режим CLEAR для стирания
@@ -65,7 +67,9 @@ class Instrument {
                 deletedlines.clear();
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Начало рисования
-                    freeLines.add(new FreeLine(event.getX(), event.getY()));
+                    DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
+                    newDrawable.setPaint(new Paint(paint));
+                    freeLines.add(newDrawable);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     // Рисуем линию при движении
                     DrawableObject current = freeLines.get(freeLines.size() - 1);
@@ -78,7 +82,7 @@ class Instrument {
             case FILL:
                 ;
             default:
-            ED.invalidate(); // Перерисовываем экран
+                ED.invalidate(); // Перерисовываем экран
         }
     }
 }

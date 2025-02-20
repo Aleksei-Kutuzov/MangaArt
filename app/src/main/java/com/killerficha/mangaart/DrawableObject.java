@@ -6,7 +6,15 @@ import android.graphics.Path;
 
 public class DrawableObject {
     Path path;
+    Paint paint;
 
+    public void setPaint(Paint paint) {
+        this.paint = paint;
+    }
+
+    public Paint getPaint() {
+        return paint;
+    }
 
     public void setPath(Path path) {
         this.path = path;
@@ -16,7 +24,7 @@ public class DrawableObject {
         return path;
     }
 
-    public void draw(Canvas canvas, Paint paint) {
+    public void draw(Canvas canvas) {
     }
 
     public void lineTo(float x, float y) {

@@ -13,7 +13,7 @@ public class EditorDraw extends View {
 
     private Stack<DrawableObject> deletedlines = new Stack<>();
 
-    private Instrument instrument;
+    public Instrument instrument;
 
     Canvas canvas;
 
@@ -29,7 +29,7 @@ public class EditorDraw extends View {
         super.onDraw(canvas);
         // Рисуем все линии
         for (DrawableObject freeLine : freeLines) {
-            freeLine.draw(canvas, instrument.paint);
+            freeLine.draw(canvas);
         }
     }
 

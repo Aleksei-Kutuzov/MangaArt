@@ -17,7 +17,7 @@ public class FreeLine extends DrawableObject {
         path.moveTo(startX, startY);
     }
 
-    public void draw(Canvas canvas, Paint paint){
+    public void draw(Canvas canvas){
         canvas.drawPath(path, paint);
     }
 

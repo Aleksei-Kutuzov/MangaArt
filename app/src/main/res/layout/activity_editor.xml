@@ -5,10 +5,11 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Editor"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Editor">
 
     <!-- Основной контейнер для холста -->
+
     <FrameLayout
         android:id="@+id/view"
         android:layout_width="match_parent"
@@ -18,14 +19,36 @@
     </FrameLayout>
 
     <!-- Контейнер для кнопок -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/chooseColorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.001"
+            android:text="Цвет" />
+
+        <SeekBar
+            android:id="@+id/chooseThicknessBar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:max="100"
+            android:min="5" />
+    </LinearLayout>
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <!-- Строка с кнопками -->
+
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <!-- Кнопки для действий -->
 
