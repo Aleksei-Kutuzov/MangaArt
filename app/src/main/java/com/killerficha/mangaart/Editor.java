@@ -33,7 +33,6 @@ public class Editor extends AppCompatActivity {
         ImageView removeButton = findViewById(R.id.back);
         ImageView restoreButton = findViewById(R.id.next);
         // ImageView pencilButton = findViewById(R.id.pencil);
-        //ImageView saveButton = findViewById(R.id.save);
         Button chooseColorButton = findViewById(R.id.chooseColorButton);
         SeekBar chooseThicknessBar = findViewById(R.id.chooseThicknessBar);
 
@@ -41,8 +40,10 @@ public class Editor extends AppCompatActivity {
         clearButton.setOnClickListener(v -> editorDraw.clear());
         removeButton.setOnClickListener(v -> editorDraw.removeLastLine());
         restoreButton.setOnClickListener(v -> editorDraw.restoreLastLine());
-        chooseColorButton.setOnClickListener(v -> chooseColor());
         //pencilButton.setOnClickListener(v -> Instrument.setMode(Instrument.mode_list.PENCIL));
+
+        chooseThicknessBar.setProgress(editorDraw.instrument.getThickness());
+        chooseColorButton.setOnClickListener(v -> chooseColor());
         chooseThicknessBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -51,7 +52,6 @@ public class Editor extends AppCompatActivity {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
-        //saveButton.setOnClickListener(v -> editorDraw.save());
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
