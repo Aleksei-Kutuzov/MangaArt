@@ -1,19 +1,27 @@
 package com.killerficha.mangaart;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class Editor extends AppCompatActivity {
 
+    private static final int REQUEST_CODE_SAVE_FILE = 5252; // это индификатор запроса он не должен совподать с другим инд.зап. приложения
     private EditorDraw editorDraw; // Объект для рисования
 
     @Override
@@ -58,6 +66,9 @@ public class Editor extends AppCompatActivity {
                 editorDraw.instrument.setThickness(seekBar.getProgress());
             }
         });
+
+        Button saveButton = findViewById(R.id.save);
+        saveButton.setOnClickListener(v -> saveProject());
     }
 
 
@@ -71,8 +82,46 @@ public class Editor extends AppCompatActivity {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
                 // Действие при отмене
+                saveProject();
             }
         });
         colorPicker.show();
+    }
+
+    void saveProject(){
+
+        // Создаем Intent для выбора директории
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/png"); // Указываем тип файла (например, PNG)
+        intent.putExtra(Intent.EXTRA_TITLE, "my comics.png"); // Предлагаемое имя файла
+
+        // Запускаем Intent
+        startActivityForResult(intent, REQUEST_CODE_SAVE_FILE);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_SAVE_FILE && resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri uri = data.getData();
+                // Теперь вы можете сохранить Bitmap в выбранную директорию
+                saveBitmapToUri(editorDraw.getBitmap(), uri);
+            }
+        }
+    }
+
+    private void saveBitmapToUri(Bitmap bitmap, Uri uri) {
+        try (OutputStream outputStream = getContentResolver().openOutputStream(uri)) {
+            if (outputStream != null) {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                outputStream.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

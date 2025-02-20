@@ -1,7 +1,9 @@
 package com.killerficha.mangaart;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -17,6 +19,8 @@ public class EditorDraw extends View {
 
     Canvas canvas;
 
+    Bitmap img_bitmap;
+
 
     public EditorDraw(Context context) {
         super(context);
@@ -27,6 +31,7 @@ public class EditorDraw extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        this.canvas = canvas;
         // Рисуем все линии
         for (DrawableObject freeLine : freeLines) {
             freeLine.draw(canvas);
@@ -60,5 +65,27 @@ public class EditorDraw extends View {
             deletedlines.remove(freeLines.lastElement()); // чистим удалённые
             invalidate(); // Перерисовываем экран
         }
+    }
+
+    public Bitmap getBitmap() {
+        // 1. Создаем Bitmap того же размера, что и View
+        Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+
+        // 2. Создаем Canvas, связанный с этим Bitmap
+        Canvas canvas = new Canvas(bitmap);
+
+        // 3. Рисуем фон View (если он есть)
+        if (getBackground() != null) {
+            getBackground().draw(canvas);
+        } else {
+            // Если фона нет, заливаем Canvas белым цветом (или любым другим)
+            canvas.drawColor(Color.WHITE);
+        }
+
+        // 4. Вызываем метод draw, передавая наш Canvas
+        draw(canvas);
+
+        // 5. Возвращаем Bitmap с результатом рисования
+        return bitmap;
     }
 }

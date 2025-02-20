@@ -115,10 +115,11 @@
                 android:text="маркер" />
 
             <Button
-                android:id="@+id/button18"
+                android:id="@+id/save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="Сохранить" />
         </TableRow>
     </TableLayout>
 
