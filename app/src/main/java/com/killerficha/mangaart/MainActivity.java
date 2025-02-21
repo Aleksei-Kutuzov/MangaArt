@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        int defaultColor = Color.BLACK;
+        //int defaultColor = Color.BLACK;
 
         editorButton = findViewById(R.id.getToEditir);
         editorButton.setOnClickListener(new View.OnClickListener() {

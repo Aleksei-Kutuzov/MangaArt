@@ -7,12 +7,15 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.view.MotionEvent;
+import android.view.View;
 
 import java.util.List;
 
 
 class Instrument {
     Paint paint;
+    Paint markerPaint;
+
     Paint eraserPaint; // Paint для ластика
 
     enum mode_list {PENCIL, MARKER, ERASER, FILL, VECTOR} // режимы: карандаш, маркер, ластик, заливка
@@ -24,7 +27,6 @@ class Instrument {
         paint.setColor(color);  // Цвет линии
         paint.setStrokeWidth(thickness); // Толщина линии
         paint.setStyle(Paint.Style.STROKE);
-
         paint.setStrokeCap(Paint.Cap.ROUND); // Круглые концы
         paint.setStrokeJoin(Paint.Join.ROUND); // Круглые соединения
 
@@ -32,7 +34,22 @@ class Instrument {
         eraserPaint = new Paint(ANTI_ALIAS_FLAG);
         eraserPaint.setStrokeWidth(thickness); // Толщина ластика
         eraserPaint.setStyle(Paint.Style.STROKE);
-        eraserPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR)); // Режим CLEAR для стирания
+        eraserPaint.setStrokeCap(Paint.Cap.ROUND); // Круглые концы
+        eraserPaint.setStrokeJoin(Paint.Join.ROUND); // Круглые соединения
+        eraserPaint.setColor(Color.WHITE); //хыфвщхвпфшзщявхпашщзаыяфгзщгыфавщзгфавфыгавшывфагщывящазхгвщзыфгхашгфывхфгащш
+
+        markerPaint = new Paint(ANTI_ALIAS_FLAG); // это сглаживание, но оно может немного снижать производительность
+        markerPaint.setColor(color);  // Цвет линии
+        markerPaint.setStrokeWidth(thickness); // Толщина линии
+        markerPaint.setStyle(Paint.Style.STROKE);
+        markerPaint.setStrokeCap(Paint.Cap.ROUND); // Круглые концы
+        markerPaint.setStrokeJoin(Paint.Join.ROUND); // Круглые соединения
+        markerPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
+        markerPaint.setAntiAlias(true);
+        markerPaint.setAlpha(1);
+
+
+
     }
 
     Instrument(){
@@ -65,7 +82,7 @@ class Instrument {
     }
 
     public void execute(MotionEvent event, List<DrawableObject> freeLines, List<DrawableObject> deletedlines, EditorDraw ED) /* lines это кастыль, здесь должен быть обьект который содержит все виды рис элементов и которым можно управлять историей */ {
-        switch (this.mode){
+        switch (this.mode) {
             case PENCIL:
                 deletedlines.clear();
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -79,9 +96,38 @@ class Instrument {
                     current.lineTo(event.getX(), event.getY());
                 }
             case MARKER:
-                ;
+                if (this.mode == mode_list.MARKER){
+                deletedlines.clear();
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Начало рисования
+                    DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
+                    newDrawable.setPaint(new Paint(markerPaint));
+                    freeLines.add(newDrawable);
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    // Рисуем линию при движении
+                    DrawableObject current = freeLines.get(freeLines.size() - 1);
+                    current.lineTo(event.getX(), event.getY());
+                }
+        }
+
             case ERASER:
-                ;
+                if (this.mode == mode_list.ERASER) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Начало рисования
+                    ;
+                    DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
+                    newDrawable.setPaint(new Paint(eraserPaint));
+                    freeLines.add(newDrawable);
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    // Рисуем линию при движении
+                    DrawableObject current = freeLines.get(freeLines.size() - 1);
+                    current.lineTo(event.getX(), event.getY());
+                }
+                }
+                else{
+                    eraserPaint.setXfermode(null);
+                }
+
             case FILL:
                 ;
             default:

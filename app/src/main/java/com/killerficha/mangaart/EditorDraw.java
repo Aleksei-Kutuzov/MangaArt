@@ -32,6 +32,7 @@ public class EditorDraw extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         this.canvas = canvas;
+        canvas.drawARGB(255, 255, 255, 255);
         // Рисуем все линии
         for (DrawableObject freeLine : freeLines) {
             freeLine.draw(canvas);
