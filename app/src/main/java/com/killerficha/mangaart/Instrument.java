@@ -16,6 +16,9 @@ class Instrument {
     Paint paint;
     Paint markerPaint;
 
+    public static String s = "";
+
+
     Paint eraserPaint; // Paint для ластика
 
     enum mode_list {PENCIL, MARKER, ERASER, FILL, VECTOR} // режимы: карандаш, маркер, ластик, заливка
@@ -44,7 +47,7 @@ class Instrument {
         markerPaint.setStyle(Paint.Style.STROKE);
         markerPaint.setStrokeCap(Paint.Cap.ROUND); // Круглые концы
         markerPaint.setStrokeJoin(Paint.Join.ROUND); // Круглые соединения
-        markerPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
+        markerPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
         markerPaint.setAntiAlias(true);
         markerPaint.setAlpha(1);
 
@@ -77,6 +80,7 @@ class Instrument {
         return mode;
     }
 
+
     public void setMode(mode_list mode) {
         this.mode = mode;
     }
@@ -85,6 +89,8 @@ class Instrument {
         switch (this.mode) {
             case PENCIL:
                 deletedlines.clear();
+                s = "";
+                s += mode;
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Начало рисования
                     DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
@@ -96,6 +102,8 @@ class Instrument {
                     current.lineTo(event.getX(), event.getY());
                 }
             case MARKER:
+                s = "";
+                s += mode;
                 if (this.mode == mode_list.MARKER){
                 deletedlines.clear();
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -111,6 +119,8 @@ class Instrument {
         }
 
             case ERASER:
+                s = "";
+                s += mode;
                 if (this.mode == mode_list.ERASER) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Начало рисования
