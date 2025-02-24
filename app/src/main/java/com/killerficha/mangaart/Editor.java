@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -44,8 +45,8 @@ public class Editor extends AppCompatActivity {
         ImageView removeButton = findViewById(R.id.back);
         ImageView restoreButton = findViewById(R.id.next);
         ImageView pencilButton = findViewById(R.id.pencil);
-        Button eraserButton = findViewById(R.id.eraser);
-        TextView modeX = findViewById(R.id.mode);
+        ImageButton eraserButton = findViewById(R.id.eraser);
+        //TextView modeX = findViewById(R.id.mode);
         Button chooseColorButton = findViewById(R.id.chooseColorButton);
         SeekBar chooseThicknessBar = findViewById(R.id.chooseThicknessBar);
 
