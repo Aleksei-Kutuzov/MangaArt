@@ -20,5 +20,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_menu_edit" />
+
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/chooseDirectoryButton"
+        android:layout_width="410dp"
+        android:layout_height="51dp"
+        android:layout_marginEnd="1dp"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/create"
+        tools:layout_editor_absoluteY="133dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

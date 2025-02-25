@@ -56,7 +56,6 @@ public class Editor extends AppCompatActivity {
         restoreButton.setOnClickListener(v -> editorDraw.restoreLastLine());
         eraserButton.setOnClickListener(v -> editorDraw.instrument.setMode(Instrument.mode_list.ERASER));
         pencilButton.setOnClickListener(v -> editorDraw.instrument.setMode(Instrument.mode_list.PENCIL));
-        modeX.setText("Mode" + Instrument.s);
 
         chooseThicknessBar.setProgress(editorDraw.instrument.getThickness());
         chooseColorButton.setOnClickListener(v -> chooseColor());

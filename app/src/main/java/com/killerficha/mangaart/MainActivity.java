@@ -2,22 +2,31 @@ package com.killerficha.mangaart;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.io.File;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class MainActivity extends AppCompatActivity {
 
     ImageButton editorButton;
+    Uri selectedDirectoryUri;
+    ImageButton chooseDirectoryButton;
+
+    int REQUEST_CODE_CHOOSE_DIRECTORY = 1;
 
 
     @Override
@@ -37,9 +46,12 @@ public class MainActivity extends AppCompatActivity {
         editorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(MainActivity.this, Editor.class);
+                Intent intent = new Intent(MainActivity.this, Editor.class);
                 startActivity(intent);
             }
         });
+
+
+
+
     }
-}

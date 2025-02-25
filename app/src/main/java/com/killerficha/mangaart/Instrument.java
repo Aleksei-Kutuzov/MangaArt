@@ -2,23 +2,25 @@ package com.killerficha.mangaart;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.List;
+import java.util.Stack;
 
 
 class Instrument {
     Paint paint;
     Paint markerPaint;
 
-    public static String s = "";
-
-
+    Stack<Point> stack;
     Paint eraserPaint; // Paint для ластика
 
     enum mode_list {PENCIL, MARKER, ERASER, FILL, VECTOR} // режимы: карандаш, маркер, ластик, заливка
@@ -67,6 +69,27 @@ class Instrument {
         return paint.getColor();
     }
 
+    public void floodFill(Bitmap bitmap, int x, int y, int targetColor, int fillColor) {
+        stack.push(new Point(x, y));
+
+        while (!stack.isEmpty()) {
+            Point p = stack.pop();
+            if (p.x < 0 || p.x >= bitmap.getWidth() || p.y < 0 || p.y >= bitmap.getHeight()) continue;
+
+            int currentColor = bitmap.getPixel(p.x, p.y);
+            if (currentColor != targetColor || currentColor == fillColor) continue;
+
+            bitmap.setPixel(p.x, p.y, fillColor);
+
+            stack.push(new Point(p.x + 1, p.y)); // Вправо
+            stack.push(new Point(p.x - 1, p.y)); // Влево
+            stack.push(new Point(p.x, p.y + 1)); // Вниз
+            stack.push(new Point(p.x, p.y - 1)); // Вверх
+        }
+    }
+
+
+
     void setThickness(int thickness) {
         paint.setStrokeWidth(thickness);
         eraserPaint.setStrokeWidth(thickness); // Обновляем толщину ластика
@@ -89,8 +112,6 @@ class Instrument {
         switch (this.mode) {
             case PENCIL:
                 deletedlines.clear();
-                s = "";
-                s += mode;
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Начало рисования
                     DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
@@ -102,8 +123,6 @@ class Instrument {
                     current.lineTo(event.getX(), event.getY());
                 }
             case MARKER:
-                s = "";
-                s += mode;
                 if (this.mode == mode_list.MARKER){
                 deletedlines.clear();
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -119,8 +138,6 @@ class Instrument {
         }
 
             case ERASER:
-                s = "";
-                s += mode;
                 if (this.mode == mode_list.ERASER) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Начало рисования
@@ -139,7 +156,20 @@ class Instrument {
                 }
 
             case FILL:
-                ;
+                if (this.mode == mode_list.FILL) {
+                    // bitmapa = ED.getBitmap();
+
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                        DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
+                        newDrawable.getPath().setFillType(Path.FillType.WINDING);
+                        newDrawable.setPaint(new Paint(eraserPaint));
+                        freeLines.add(newDrawable);
+                        floodFill(ED.getBitmap(), (int) event.getX(), (int) event.getY(), Color.WHITE, getColor());
+                        DrawableObject current = freeLines.get(freeLines.size() - 1);
+                        current.lineTo(event.getX(), event.getY());
+                    }
+                }
             default:
                 ED.invalidate(); // Перерисовываем экран
         }
