@@ -3,33 +3,29 @@ package com.killerficha.mangaart;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.util.Log;
 
 // Вспомогательный класс для представления линии
-public class StraightLine extends DrawableObject {
-    float startX, startY, endX, endY;
+public class StraightLine extends FreeLine {
 
-    void moveTo(float x, float y) {
-        endX = startX - endX + x;
-        endY = startY - endY + y;
-        startX = x;
-        startY = y;
+
+    StraightLine(float startX, float startY) {
+        super(startX, startY);
+        this.path.lineTo(startX, startY);
     }
 
-
-    StraightLine(float startX, float startY, float endX, float endY) {
-        this.startX = startX;
-        this.startY = startY;
-        this.endX = endX;
-        this.endY = endY;
-    }
-
-    public void draw(Canvas canvas){
-        canvas.drawLine(startX, startY, endX, endY, paint);
-    }
 
     public void lineTo(float x, float y) {
-        this.endX = x;
-        this.endY = y;
+        this.path.setLastPoint(x, y);
+        Log.d("&", "4");
     }
 
+    @Override
+    public void setPaint(Paint paint) {
+        super.setPaint(paint);
+        paint.setAlpha(128);
+        paint.setAntiAlias(false);
+        paint.setStrokeCap(Paint.Cap.BUTT);
+    }
 }

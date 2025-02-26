@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -14,8 +15,7 @@ import java.util.List;
 
 class Instrument {
     Paint paint;
-    Paint fillPaint;
-    Paint markerPaint;
+//    Paint markerPaint;
 
 
     Paint eraserPaint; // Paint для ластика
@@ -28,7 +28,7 @@ class Instrument {
         paint = new Paint(ANTI_ALIAS_FLAG); // это сглаживание, но оно может немного снижать производительность
         paint.setColor(color);  // Цвет линии
         paint.setStrokeWidth(thickness); // Толщина линии
-        paint.setStyle(Paint.Style.STROKE);
+        paint.setStyle(Paint.Style.FILL);
         paint.setStrokeCap(Paint.Cap.ROUND); // Круглые концы
         paint.setStrokeJoin(Paint.Join.ROUND); // Круглые соединения
 
@@ -40,15 +40,15 @@ class Instrument {
         eraserPaint.setStrokeJoin(Paint.Join.ROUND); // Круглые соединения
         eraserPaint.setColor(Color.WHITE); //хыфвщхвпфшзщявхпашщзаыяфгзщгыфавщзгфавфыгавшывфагщывящазхгвщзыфгхашгфывхфгащш
 
-        markerPaint = new Paint(ANTI_ALIAS_FLAG); // это сглаживание, но оно может немного снижать производительность
-        markerPaint.setColor(color);  // Цвет линии
-        markerPaint.setStrokeWidth(thickness); // Толщина линии
-        markerPaint.setStyle(Paint.Style.STROKE);
-        markerPaint.setStrokeCap(Paint.Cap.ROUND); // Круглые концы
-        markerPaint.setStrokeJoin(Paint.Join.ROUND); // Круглые соединения
-        markerPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
-        markerPaint.setAntiAlias(true);
-        markerPaint.setAlpha((255/2)+50);
+//        markerPaint = new Paint(ANTI_ALIAS_FLAG); // это сглаживание, но оно может немного снижать производительность
+//        markerPaint.setColor(color);  // Цвет линии
+//        markerPaint.setStrokeWidth(thickness); // Толщина линии
+//        markerPaint.setStyle(Paint.Style.STROKE);
+//        markerPaint.setStrokeCap(Paint.Cap.ROUND); // Круглые концы
+//        markerPaint.setStrokeJoin(Paint.Join.ROUND); // Круглые соединения
+//        markerPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
+//        markerPaint.setAntiAlias(true);
+//        markerPaint.setAlpha((255/2)+50);
     }
 
     Instrument(){
@@ -85,33 +85,36 @@ class Instrument {
         switch (this.mode) {
             case PENCIL:
                 deletedlines.clear();
+                Log.e("!", "1");
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    Log.e("!", "2");
                     // Начало рисования
                     DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
                     newDrawable.setPaint(new Paint(paint));
                     freeLines.add(newDrawable);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    Log.e("!", "3");
                     // Рисуем линию при движении
                     DrawableObject current = freeLines.get(freeLines.size() - 1);
                     current.lineTo(event.getX(), event.getY());
                 }
+                Log.e("!", "4");
+                break;
             case MARKER:
-                if (this.mode == mode_list.MARKER){
                 deletedlines.clear();
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Начало рисования
-                    DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
-                    newDrawable.setPaint(new Paint(markerPaint));
+                    DrawableObject newDrawable = new StraightLine(event.getX(), event.getY());
+                    newDrawable.setPaint(new Paint(paint));
+                    //newDrawable.getPaint().setAlpha(128);
                     freeLines.add(newDrawable);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     // Рисуем линию при движении
                     DrawableObject current = freeLines.get(freeLines.size() - 1);
                     current.lineTo(event.getX(), event.getY());
                 }
-        }
-
+                break;
             case ERASER:
-                if (this.mode == mode_list.ERASER) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Начало рисования
                     DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
@@ -122,24 +125,21 @@ class Instrument {
                     DrawableObject current = freeLines.get(freeLines.size() - 1);
                     current.lineTo(event.getX(), event.getY());
                 }
-                }
                 else{
                     eraserPaint.setXfermode(null);
                 }
-
+                break;
             case FILL:
-                if (this.mode == mode_list.FILL) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        // Начало рисования
-                        DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
-                        newDrawable.setPaint(new Paint(fillPaint));
-                        freeLines.add(newDrawable);
-                        DrawableObject current = freeLines.get(freeLines.size() - 1);
-                        current.lineTo(event.getX(), event.getY());
-                    }
-                }
-            default:
-                ED.invalidate(); // Перерисовываем экран
+//                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                        // Начало рисования
+//                        DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
+//                        newDrawable.setPaint(new Paint(fillPaint));
+//                        freeLines.add(newDrawable);
+//                        DrawableObject current = freeLines.get(freeLines.size() - 1);
+//                        current.lineTo(event.getX(), event.getY());
+//                    }
+                break;
         }
+        ED.invalidate(); // Перерисовываем экран
     }
 }
