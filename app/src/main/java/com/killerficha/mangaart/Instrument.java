@@ -28,7 +28,7 @@ class Instrument {
         paint = new Paint(ANTI_ALIAS_FLAG); // это сглаживание, но оно может немного снижать производительность
         paint.setColor(color);  // Цвет линии
         paint.setStrokeWidth(thickness); // Толщина линии
-        paint.setStyle(Paint.Style.FILL);
+        paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeCap(Paint.Cap.ROUND); // Круглые концы
         paint.setStrokeJoin(Paint.Join.ROUND); // Круглые соединения
 
