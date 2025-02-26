@@ -46,8 +46,8 @@ public class Editor extends AppCompatActivity {
         ImageView restoreButton = findViewById(R.id.next);
         ImageView pencilButton = findViewById(R.id.pencil);
         ImageButton eraserButton = findViewById(R.id.eraser);
-        //TextView modeX = findViewById(R.id.mode);
-        Button chooseColorButton = findViewById(R.id.chooseColorButton);
+        TextView modeX = findViewById(R.id.mode);
+        ImageView chooseColorButton = findViewById(R.id.chooseColorButton);
         SeekBar chooseThicknessBar = findViewById(R.id.chooseThicknessBar);
 
         // Настроим действия кнопок
