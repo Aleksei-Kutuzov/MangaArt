@@ -1,14 +1,9 @@
 package com.killerficha.mangaart;
 
-import static android.view.View.MeasureSpec.getMode;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -45,6 +40,9 @@ public class Editor extends AppCompatActivity {
         ImageView removeButton = findViewById(R.id.back);
         ImageView restoreButton = findViewById(R.id.next);
         ImageView pencilButton = findViewById(R.id.pencil);
+        ImageView fillButton = findViewById(R.id.fill);
+        ImageView markerButton = findViewById(R.id.marker);
+
         ImageButton eraserButton = findViewById(R.id.eraser);
         TextView modeX = findViewById(R.id.mode);
         ImageView chooseColorButton = findViewById(R.id.chooseColorButton);
@@ -56,8 +54,9 @@ public class Editor extends AppCompatActivity {
         restoreButton.setOnClickListener(v -> editorDraw.restoreLastLine());
         eraserButton.setOnClickListener(v -> editorDraw.instrument.setMode(Instrument.mode_list.ERASER));
         pencilButton.setOnClickListener(v -> editorDraw.instrument.setMode(Instrument.mode_list.PENCIL));
-        modeX.setText("Mode" + Instrument.s);
-
+        fillButton.setOnClickListener(v -> editorDraw.instrument.setMode(Instrument.mode_list.FILL));
+        markerButton.setOnClickListener(v -> editorDraw.instrument.setMode(Instrument.mode_list.MARKER));
+        modeX.setText(editorDraw.instrument.mode.name());
         chooseThicknessBar.setProgress(editorDraw.instrument.getThickness());
         chooseColorButton.setOnClickListener(v -> chooseColor());
         chooseThicknessBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -90,7 +89,6 @@ public class Editor extends AppCompatActivity {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
                 // Действие при отмене
-                saveProject();
             }
         });
         colorPicker.show();

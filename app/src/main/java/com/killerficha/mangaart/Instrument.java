@@ -14,16 +14,15 @@ import java.util.List;
 
 class Instrument {
     Paint paint;
+    Paint fillPaint;
     Paint markerPaint;
-
-    public static String s = "";
 
 
     Paint eraserPaint; // Paint для ластика
 
     enum mode_list {PENCIL, MARKER, ERASER, FILL, VECTOR} // режимы: карандаш, маркер, ластик, заливка
 
-    mode_list mode = mode_list.PENCIL; // по дефолту **PENCIL**
+    static mode_list mode = mode_list.PENCIL; // по дефолту **PENCIL**
 
     Instrument(int color, int thickness){
         paint = new Paint(ANTI_ALIAS_FLAG); // это сглаживание, но оно может немного снижать производительность
@@ -49,10 +48,7 @@ class Instrument {
         markerPaint.setStrokeJoin(Paint.Join.ROUND); // Круглые соединения
         markerPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.ADD));
         markerPaint.setAntiAlias(true);
-        markerPaint.setAlpha(1);
-
-
-
+        markerPaint.setAlpha((255/2)+50);
     }
 
     Instrument(){
@@ -89,8 +85,6 @@ class Instrument {
         switch (this.mode) {
             case PENCIL:
                 deletedlines.clear();
-                s = "";
-                s += mode;
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Начало рисования
                     DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
@@ -102,8 +96,6 @@ class Instrument {
                     current.lineTo(event.getX(), event.getY());
                 }
             case MARKER:
-                s = "";
-                s += mode;
                 if (this.mode == mode_list.MARKER){
                 deletedlines.clear();
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -119,12 +111,9 @@ class Instrument {
         }
 
             case ERASER:
-                s = "";
-                s += mode;
                 if (this.mode == mode_list.ERASER) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Начало рисования
-                    ;
                     DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
                     newDrawable.setPaint(new Paint(eraserPaint));
                     freeLines.add(newDrawable);
@@ -139,7 +128,16 @@ class Instrument {
                 }
 
             case FILL:
-                ;
+                if (this.mode == mode_list.FILL) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        // Начало рисования
+                        DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
+                        newDrawable.setPaint(new Paint(fillPaint));
+                        freeLines.add(newDrawable);
+                        DrawableObject current = freeLines.get(freeLines.size() - 1);
+                        current.lineTo(event.getX(), event.getY());
+                    }
+                }
             default:
                 ED.invalidate(); // Перерисовываем экран
         }
