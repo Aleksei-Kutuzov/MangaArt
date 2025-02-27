@@ -12,8 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import org.opencv.android.OpenCVLoader;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        if (!OpenCVLoader.initDebug()) {
+            Log.e("OpenCV", "Initialization failed");
+        } else {
+            Log.d("OpenCV", "Initialization succeeded");
+        }
 
         //int defaultColor = Color.BLACK;
 
