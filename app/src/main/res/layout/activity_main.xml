@@ -57,13 +57,14 @@
         android:id="@+id/imageButton2"
         android:layout_width="521dp"
         android:layout_height="139dp"
+        android:layout_marginEnd="76dp"
         android:background="@null"
         android:backgroundTint="@null"
         android:hapticFeedbackEnabled="false"
         android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/buttonblue"
-        tools:layout_editor_absoluteX="-185dp"
-        tools:layout_editor_absoluteY="202dp" />
+        tools:layout_editor_absoluteY="207dp" />
 
     <ImageView
         android:id="@+id/imageView2"
