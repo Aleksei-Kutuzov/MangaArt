@@ -37,6 +37,7 @@ public class EditorDraw extends View {
         for (DrawableObject freeLine : freeLines) {
             freeLine.draw(canvas);
         }
+
     }
 
     @Override

@@ -11,125 +11,144 @@
     <!--  Контейнер для кнопок  -->
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <!--  Строка с кнопками  -->
-        <TableRow
+        <ImageView
+            android:id="@+id/next"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <!--  Кнопки для действий  -->
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#B8BBFE"
+            android:fadingEdge="vertical"
+            android:rotationY="180"
+            app:srcCompat="@android:drawable/ic_menu_revert" />
 
-        </TableRow>
-        <!--  Дополнительные кнопки  -->
-    </TableLayout>
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#FF7E74"
+            android:fadingEdge="vertical"
+            app:srcCompat="@android:drawable/ic_menu_revert" />
 
-    <ImageView
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="172dp"
-        android:layout_marginBottom="2dp"
-        android:layout_weight="1"
-        android:background="#B8BBFE"
-        android:fadingEdge="vertical"
-        android:rotationY="180"
-        app:layout_constraintBottom_toTopOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/textColorLink"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
-    <ImageView
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="172dp"
-        android:layout_marginBottom="2dp"
-        android:layout_weight="1"
-        android:background="#FF7E74"
-        android:fadingEdge="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
+        <Button
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Сохранить" />
 
-    <ImageView
-        android:id="@+id/delete"
-        android:layout_width="188dp"
-        android:layout_height="59dp"
-        android:layout_weight="1"
-        android:background="?android:attr/textColorLink"
-        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
-        tools:layout_editor_absoluteX="222dp"
-        tools:layout_editor_absoluteY="548dp" />
-
-    <SeekBar
-        android:id="@+id/chooseThicknessBar"
-        android:layout_width="413dp"
-        android:layout_height="25dp"
-        android:layout_weight="1"
-        android:max="100"
-        android:min="5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="522dp" />
+        <TextView
+            android:id="@+id/mode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="mode" />
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/view"
-        android:layout_width="398dp"
-        android:layout_height="484dp"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/chooseThicknessBar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"></FrameLayout>
+
+    <TableLayout
+        android:id="@+id/tableLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <TableRow
-            android:id="@+id/tableRow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+
+            <SeekBar
+                android:id="@+id/chooseThicknessBar"
+                android:layout_width="413dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:max="100"
+                android:min="5" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/eraser"
+                android:layout_width="wrap_content"
+                android:layout_height="51dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF"
+                android:contentDescription="ластик"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/eraser" />
+
+            <ImageButton
+                android:id="@+id/fill"
+                android:layout_width="wrap_content"
+                android:layout_height="51dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF"
+                android:contentDescription="Заливка"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/fill" />
 
         </TableRow>
 
-    </FrameLayout>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/eraser"
-        android:layout_width="187dp"
-        android:layout_height="49dp"
-        android:backgroundTint="#FFFFFF"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/eraser"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="548dp" />
+            <ImageView
+                android:id="@+id/pencil"
+                android:layout_width="183dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/pen" />
 
-    <ImageView
-        android:id="@+id/chooseColorButton"
-        android:layout_width="182dp"
-        android:layout_height="46dp"
-        app:srcCompat="@drawable/colors"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="670dp" />
+            <ImageView
+                android:id="@+id/marker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/marker" />
 
-    <ImageView
-        android:id="@+id/pencil"
-        android:layout_width="180dp"
-        android:layout_height="51dp"
-        app:srcCompat="@drawable/pen"
-        tools:layout_editor_absoluteX="224dp"
-        tools:layout_editor_absoluteY="610dp" />
+        </TableRow>
 
-    <Button
-        android:id="@+id/save"
-        android:layout_width="45dp"
-        android:layout_height="28dp"
-        android:layout_weight="1"
-        android:text="Сохранить"
-        tools:layout_editor_absoluteX="108dp"
-        tools:layout_editor_absoluteY="1dp" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/chooseColorButton"
+                android:layout_width="182dp"
+                android:layout_height="46dp"
+                app:srcCompat="@drawable/colors" />
+        </TableRow>
+
+    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
