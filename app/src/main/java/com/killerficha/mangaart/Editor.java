@@ -42,6 +42,7 @@ public class Editor extends AppCompatActivity {
         ImageView pencilButton = findViewById(R.id.pencil);
         ImageView fillButton = findViewById(R.id.fill);
         ImageView markerButton = findViewById(R.id.marker);
+        ImageView cropRotate = findViewById(R.id.crop_rotate);
 
         ImageButton eraserButton = findViewById(R.id.eraser);
         TextView modeX = findViewById(R.id.mode);
@@ -49,13 +50,13 @@ public class Editor extends AppCompatActivity {
         SeekBar chooseThicknessBar = findViewById(R.id.chooseThicknessBar);
 
         // Настроим действия кнопок
-        clearButton.setOnClickListener(v -> editorDraw.clear());
+        clearButton.setOnClickListener(v -> {editorDraw.clear(); editorDraw.setEditMode(false);});
         removeButton.setOnClickListener(v -> editorDraw.removeLastLine());
         restoreButton.setOnClickListener(v -> editorDraw.restoreLastLine());
-        eraserButton.setOnClickListener(v -> editorDraw.instrument.setMode(Instrument.mode_list.ERASER));
-        pencilButton.setOnClickListener(v -> editorDraw.instrument.setMode(Instrument.mode_list.PENCIL));
-        fillButton.setOnClickListener(v -> editorDraw.instrument.setMode(Instrument.mode_list.FILL));
-        markerButton.setOnClickListener(v -> editorDraw.instrument.setMode(Instrument.mode_list.MARKER));
+        eraserButton.setOnClickListener(v -> {editorDraw.instrument.setMode(Instrument.mode_list.ERASER); editorDraw.setEditMode(false);});
+        pencilButton.setOnClickListener(v -> {editorDraw.instrument.setMode(Instrument.mode_list.PENCIL); editorDraw.setEditMode(false);});
+        fillButton.setOnClickListener(v -> {editorDraw.instrument.setMode(Instrument.mode_list.FILL); editorDraw.setEditMode(false);});
+        markerButton.setOnClickListener(v -> {editorDraw.instrument.setMode(Instrument.mode_list.MARKER); editorDraw.setEditMode(false);});
         modeX.setText(editorDraw.instrument.mode.name());
         chooseThicknessBar.setProgress(editorDraw.instrument.getThickness());
         chooseColorButton.setOnClickListener(v -> chooseColor());
@@ -76,6 +77,8 @@ public class Editor extends AppCompatActivity {
 
         Button saveButton = findViewById(R.id.save);
         saveButton.setOnClickListener(v -> saveProject());
+
+        cropRotate.setOnClickListener(v -> editorDraw.switchEditMode());
     }
 
 

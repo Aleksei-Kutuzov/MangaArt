@@ -143,10 +143,19 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/crop_rotate"
+                android:layout_width="183dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/crop_rotate" />
+
+            <ImageView
                 android:id="@+id/chooseColorButton"
                 android:layout_width="182dp"
                 android:layout_height="46dp"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/colors" />
+
         </TableRow>
 
     </TableLayout>

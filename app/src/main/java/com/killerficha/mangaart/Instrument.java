@@ -27,7 +27,7 @@ class Instrument {
     Paint paint;
     Paint eraserPaint; // Paint для ластика
 
-    enum mode_list {PENCIL, MARKER, ERASER, FILL, VECTOR} // режимы: карандаш, маркер, ластик, заливка
+    enum mode_list {PENCIL, MARKER, ERASER, FILL, NO_EDIT} // режимы: карандаш, маркер, ластик, заливка и маштабирование
     static mode_list mode = mode_list.PENCIL; // по дефолту **PENCIL**
 
     Instrument(int color, int thickness) {
