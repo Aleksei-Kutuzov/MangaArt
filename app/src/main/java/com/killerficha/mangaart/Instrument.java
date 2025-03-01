@@ -1,9 +1,15 @@
 package com.killerficha.mangaart;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Shader;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -12,6 +18,10 @@ import java.util.List;
 import java.util.Queue;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
+
+import org.opencv.android.Utils;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 
 class Instrument {
     Paint paint;
@@ -116,51 +126,99 @@ class Instrument {
                     int x = (int) event.getX();
                     int y = (int) event.getY();
 
-                    // Получаем цвет пикселя в точке клика
-                    int targetColor = bitmap.getPixel(x, y);
-
                     // Цвет заливки (текущий цвет инструмента)
                     int newColor = paint.getColor();
 
-                    // Вызываем Flood Fill
-                    floodFill(bitmap, x, y, targetColor, newColor);
+                    // Запускаем Scanline Fill в новом потоке
+                    new Thread(() -> {
+                        // Выполняем Scanline Fill и получаем Bitmap с заливкой
+                        Bitmap filledBitmap = ScanlineFill(bitmap, x, y, newColor);
 
-                    // Обновляем Canvas
-                    ED.invalidate();
+                        // Возвращаем результат в UI-поток
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            if (filledBitmap != null) {
+                                // Создаем DrawableObject с залитым Bitmap
+                                DrawableObject newDrawable = new BitmapObject(filledBitmap);
+                                freeLines.add(newDrawable);
+
+                                // Обновляем Canvas
+                                ED.invalidate();
+                            }
+                        });
+                    }).start();
                 }
                 break;
         }
         ED.invalidate(); // Перерисовываем экран
     }
 
-    // Реализация Flood Fill
-    private void floodFill(Bitmap bitmap, int x, int y, int targetColor, int newColor) {
-        if (targetColor == newColor) return;
 
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
+    public Bitmap ScanlineFill(Bitmap bitmap, int x, int y, int newColor) {
+        // Проверяем, что Bitmap не null
+        if (bitmap == null) {
+            Log.e("ScanlineFill", "Bitmap is null");
+            return null;
+        }
 
-        if (x < 0 || x >= width || y < 0 || y >= height) return;
+        // Проверяем, что координаты внутри границ
+        if (x < 0 || x >= bitmap.getWidth() || y < 0 || y >= bitmap.getHeight()) {
+            Log.e("ScanlineFill", "Coordinates are out of bounds");
+            return null;
+        }
 
-        int startColor = bitmap.getPixel(x, y);
-        if (startColor != targetColor) return;
+        // Получаем цвет начальной точки
+        int targetColor = bitmap.getPixel(x, y);
 
-        Queue<Point> queue = new LinkedList<>();
-        queue.add(new Point(x, y));
+        // Если целевой цвет совпадает с новым, возвращаем пустой Bitmap
+        if (targetColor == newColor) {
+            Log.d("ScanlineFill", "Target color is the same as new color");
+            return null;
+        }
 
+        // Создаем новый Bitmap с прозрачным фоном
+        Bitmap resultBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+
+        // Очередь для хранения отрезков строк, которые нужно обработать
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{x, x, y}); // x1, x2, y
+
+        // Одномерный массив для отслеживания посещенных точек
+        boolean[] visited = new boolean[bitmap.getWidth() * bitmap.getHeight()];
+
+        // Пока очередь не пуста, обрабатываем отрезки строк
         while (!queue.isEmpty()) {
-            Point p = queue.remove();
-            if (p.x < 0 || p.x >= width || p.y < 0 || p.y >= height) continue;
+            int[] segment = queue.remove();
+            int x1 = segment[0];
+            int x2 = segment[1];
+            int currentY = segment[2];
 
-            int currentColor = bitmap.getPixel(p.x, p.y);
-            if (currentColor == targetColor) {
-                bitmap.setPixel(p.x, p.y, newColor);
+            // Находим границы строки
+            while (x1 >= 0 && bitmap.getPixel(x1, currentY) == targetColor && !visited[x1 + currentY * bitmap.getWidth()]) x1--;
+            while (x2 < bitmap.getWidth() && bitmap.getPixel(x2, currentY) == targetColor && !visited[x2 + currentY * bitmap.getWidth()]) x2++;
 
-                queue.add(new Point(p.x + 1, p.y)); // Вправо
-                queue.add(new Point(p.x - 1, p.y)); // Влево
-                queue.add(new Point(p.x, p.y + 1)); // Вниз
-                queue.add(new Point(p.x, p.y - 1)); // Вверх
+            // Заливаем строку
+            for (int i = x1 + 1; i < x2; i++) {
+                resultBitmap.setPixel(i, currentY, newColor);
+                visited[i + currentY * bitmap.getWidth()] = true;
+            }
+
+            // Проверяем строки выше и ниже
+            if (currentY > 0) {
+                for (int i = x1 + 1; i < x2; i++) {
+                    if (bitmap.getPixel(i, currentY - 1) == targetColor && !visited[i + (currentY - 1) * bitmap.getWidth()]) {
+                        queue.add(new int[]{i, i, currentY - 1});
+                    }
+                }
+            }
+            if (currentY < bitmap.getHeight() - 1) {
+                for (int i = x1 + 1; i < x2; i++) {
+                    if (bitmap.getPixel(i, currentY + 1) == targetColor && !visited[i + (currentY + 1) * bitmap.getWidth()]) {
+                        queue.add(new int[]{i, i, currentY + 1});
+                    }
+                }
             }
         }
+
+        return resultBitmap;
     }
 }

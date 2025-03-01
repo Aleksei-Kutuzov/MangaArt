@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MangaArt"
 include ':app'
+include ':opencv'

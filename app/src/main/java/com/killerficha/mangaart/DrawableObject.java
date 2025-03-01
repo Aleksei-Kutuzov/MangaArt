@@ -10,19 +10,14 @@ public class DrawableObject {
 
     public void setPaint(Paint paint) {
         this.paint = paint;
+        this.paint.setAntiAlias(false);
     }
 
     public Paint getPaint() {
         return paint;
     }
 
-    public void setPath(Path path) {
-        this.path = path;
-    }
 
-    public Path getPath() {
-        return path;
-    }
 
     public void draw(Canvas canvas) {
     }
