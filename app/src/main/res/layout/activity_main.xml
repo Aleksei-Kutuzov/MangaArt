@@ -5,20 +5,78 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2C2A2A"
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="409dp"
         android:layout_height="340dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
-        <ImageButton
-            android:id="@+id/getToEditir"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/ic_menu_edit" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="368dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logoformain" />
+
+    <ImageButton
+        android:id="@+id/create"
+        android:layout_width="182dp"
+        android:layout_height="104dp"
+        android:layout_marginTop="40dp"
+        android:background="@null"
+        android:scaleType="fitEnd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:srcCompat="@drawable/buttonred" />
+
+    <ImageView
+        android:id="@+id/plus"
+        android:layout_width="69dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="68dp"
+        app:layout_constraintEnd_toEndOf="@id/create"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="@+id/create"
+        app:srcCompat="@drawable/create"
+        tools:layout_editor_absoluteY="126dp" />
+
+    <ImageButton
+        android:id="@+id/getToEditir"
+        android:layout_width="521dp"
+        android:layout_height="139dp"
+        android:layout_marginEnd="76dp"
+        android:background="@null"
+        android:backgroundTint="@null"
+        android:hapticFeedbackEnabled="false"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/buttonblue"
+        tools:layout_editor_absoluteY="207dp" />
+
+    <ImageView
+        android:id="@+id/pen"
+        android:layout_width="91dp"
+        android:layout_height="76dp"
+        android:foregroundTint="#000000"
+        android:foregroundTintMode="add"
+        android:tint="#090505"
+        app:layout_constraintEnd_toEndOf="@+id/getToEditir"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="@id/getToEditir"
+        app:srcCompat="@drawable/pen"
+        tools:layout_editor_absoluteY="229dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

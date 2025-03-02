@@ -7,6 +7,9 @@ import android.graphics.Path;
 // класс для представления свободной линии
 public class FreeLine extends DrawableObject {
 
+    Path path;
+    Paint paint;
+
     public void moveTo(float x, float y) {
         path.moveTo(x, y);
     }

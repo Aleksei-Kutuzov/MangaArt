@@ -18,7 +18,6 @@ public class DrawableObject {
     }
 
 
-
     public void draw(Canvas canvas) {
     }
 

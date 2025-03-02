@@ -19,15 +19,15 @@ import java.util.Queue;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 
-import org.opencv.android.Utils;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
+//import org.opencv.android.Utils;
+//import org.opencv.core.CvType;
+//import org.opencv.core.Mat;
 
-class Instrument {
+public class Instrument {
     Paint paint;
     Paint eraserPaint; // Paint для ластика
 
-    enum mode_list {PENCIL, MARKER, ERASER, FILL, NO_EDIT} // режимы: карандаш, маркер, ластик, заливка и маштабирование
+    public enum mode_list {PENCIL, MARKER, ERASER, FILL, NO_EDIT} // режимы: карандаш, маркер, ластик, заливка и маштабирование
     static mode_list mode = mode_list.PENCIL; // по дефолту **PENCIL**
 
     Instrument(int color, int thickness) {
