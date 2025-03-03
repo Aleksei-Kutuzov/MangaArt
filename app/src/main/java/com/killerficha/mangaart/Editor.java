@@ -42,8 +42,9 @@ public class Editor extends AppCompatActivity {
         ImageView pencilButton = findViewById(R.id.pencil);
         ImageView fillButton = findViewById(R.id.fill);
         ImageView markerButton = findViewById(R.id.marker);
-        ImageView cropRotate = findViewById(R.id.crop_rotate);
-
+        ImageButton cropRotate = findViewById(R.id.crop_rotate);
+        ImageButton nextPageButton = findViewById(R.id.next_page);
+        ImageButton prewPageButton = findViewById(R.id.prew_page);
         ImageButton eraserButton = findViewById(R.id.eraser);
         TextView modeX = findViewById(R.id.mode);
         ImageView chooseColorButton = findViewById(R.id.chooseColorButton);
@@ -60,6 +61,10 @@ public class Editor extends AppCompatActivity {
         modeX.setText(editorDraw.instrument.mode.name());
         chooseThicknessBar.setProgress(editorDraw.instrument.getThickness());
         chooseColorButton.setOnClickListener(v -> chooseColor());
+
+        //prewPageButton.setOnClickListener();
+//        nextPageButton.setOnClickListener();
+
         chooseThicknessBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

@@ -63,8 +63,8 @@
 
     <FrameLayout
         android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="332dp"
+        android:layout_height="471dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -146,7 +146,7 @@
             android:layout_height="match_parent">
 
             <ImageButton
-                android:id="@+id/cropRotate"
+                android:id="@+id/crop_rotate"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -165,5 +165,25 @@
         </TableRow>
 
     </TableLayout>
+
+    <ImageButton
+        android:id="@+id/next_page"
+        android:layout_width="40dp"
+        android:layout_height="49dp"
+        android:background="@null"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/nextpage"
+        tools:layout_editor_absoluteX="371dp"
+        tools:layout_editor_absoluteY="265dp" />
+
+    <ImageButton
+        android:id="@+id/prew_page"
+        android:layout_width="43dp"
+        android:layout_height="49dp"
+        android:background="@null"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/prevpage"
+        tools:layout_editor_absoluteX="-3dp"
+        tools:layout_editor_absoluteY="273dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
