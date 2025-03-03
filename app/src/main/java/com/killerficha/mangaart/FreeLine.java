@@ -3,6 +3,7 @@ package com.killerficha.mangaart;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.util.Log;
 
 // класс для представления свободной линии
 public class FreeLine extends DrawableObject {
@@ -15,9 +16,16 @@ public class FreeLine extends DrawableObject {
     }
 
     FreeLine(float startX, float startY) {
+        paint = new Paint();
         path = new Path();
         path.reset();
         path.moveTo(startX, startY);
+    }
+
+    @Override
+    public void setPaint(Paint paint) {
+        this.paint = paint;
+        this.paint.setAntiAlias(false);
     }
 
     public void draw(Canvas canvas){
