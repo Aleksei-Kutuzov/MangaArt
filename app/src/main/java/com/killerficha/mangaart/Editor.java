@@ -1,6 +1,7 @@
 package com.killerficha.mangaart;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ public class Editor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         // Получаем ссылку на контейнер FrameLayout
         FrameLayout drawingContainer = findViewById(R.id.view);
 
@@ -45,8 +48,9 @@ public class Editor extends AppCompatActivity {
         ImageButton cropRotate = findViewById(R.id.crop_rotate);
         ImageButton nextPageButton = findViewById(R.id.next_page);
         ImageButton prewPageButton = findViewById(R.id.prew_page);
+        ImageButton addPageButton = findViewById(R.id.add_page);
+
         ImageButton eraserButton = findViewById(R.id.eraser);
-        TextView modeX = findViewById(R.id.mode);
         ImageView chooseColorButton = findViewById(R.id.chooseColorButton);
         SeekBar chooseThicknessBar = findViewById(R.id.chooseThicknessBar);
 
@@ -58,13 +62,8 @@ public class Editor extends AppCompatActivity {
         pencilButton.setOnClickListener(v -> {editorDraw.instrument.setMode(Instrument.mode_list.PENCIL); editorDraw.setEditMode(false);});
         fillButton.setOnClickListener(v -> {editorDraw.instrument.setMode(Instrument.mode_list.FILL); editorDraw.setEditMode(false);});
         markerButton.setOnClickListener(v -> {editorDraw.instrument.setMode(Instrument.mode_list.MARKER); editorDraw.setEditMode(false);});
-        modeX.setText(editorDraw.instrument.mode.name());
         chooseThicknessBar.setProgress(editorDraw.instrument.getThickness());
         chooseColorButton.setOnClickListener(v -> chooseColor());
-
-        //prewPageButton.setOnClickListener();
-//        nextPageButton.setOnClickListener();
-
         chooseThicknessBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -84,6 +83,10 @@ public class Editor extends AppCompatActivity {
         saveButton.setOnClickListener(v -> saveProject());
 
         cropRotate.setOnClickListener(v -> editorDraw.switchEditMode());
+
+        nextPageButton.setOnClickListener(v -> nextPage());
+        prewPageButton.setOnClickListener(v -> lastPage());
+        addPageButton.setOnClickListener(v -> addPage());
     }
 
 
@@ -137,5 +140,20 @@ public class Editor extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void nextPage() {
+        editorDraw.project.nextPage();
+        editorDraw.invalidate();
+    }
+
+    private void lastPage() {
+        editorDraw.project.lastPage();
+        editorDraw.invalidate();
+    }
+
+    private void addPage() {
+        editorDraw.project.pageAdd();
+        editorDraw.invalidate();
     }
 }

@@ -4,18 +4,18 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.view.ScaleGestureDetector;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.Stack;
-
 public class EditorDraw extends View {
 
-    private Stack<DrawableObject> freeLines = new Stack<>();
-    private Stack<DrawableObject> deletedlines = new Stack<>();
+    Project project;
+
     public Instrument instrument;
+
     Canvas canvas;
     Bitmap img_bitmap;
 
@@ -30,6 +30,10 @@ public class EditorDraw extends View {
 
     private boolean isEditMode = false; // Режим редактирования (масштабирование/поворот) или рисования
 
+    // Матрица для трансформаций
+    private Matrix transformMatrix = new Matrix();
+    private Matrix inverseMatrix = new Matrix();
+
     public EditorDraw(Context context) {
         super(context);
         instrument = new Instrument();
@@ -37,7 +41,14 @@ public class EditorDraw extends View {
         // Инициализация ScaleGestureDetector и GestureDetector
         scaleGestureDetector = new ScaleGestureDetector(context, new ScaleListener());
         gestureDetector = new GestureDetector(context, new GestureListener());
+
+
+        project = new Project();
+        project.pageAdd();
+
     }
+
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -47,20 +58,28 @@ public class EditorDraw extends View {
 
         // Применяем трансформации: смещение, масштабирование, поворот
         canvas.save();
-        canvas.translate(translationX, translationY);
-        canvas.scale(scaleFactor, scaleFactor, getWidth() / 2, getHeight() / 2);
-        canvas.rotate(rotationAngle, getWidth() / 2, getHeight() / 2);
+
+        // Создаем матрицу трансформаций
+        transformMatrix.reset();
+        transformMatrix.postTranslate(translationX, translationY);
+        transformMatrix.postScale(scaleFactor, scaleFactor, getWidth() / 2, getHeight() / 2);
+        transformMatrix.postRotate(rotationAngle, getWidth() / 2, getHeight() / 2);
+
+        // Применяем матрицу к Canvas
+        canvas.concat(transformMatrix);
 
         // Ограничиваем область отрисовки
         canvas.clipRect(0, 0, getWidth(), getHeight());
 
         // Рисуем все линии
-        for (DrawableObject freeLine : freeLines) {
+        for (DrawableObject freeLine : project.getEnabledPage().getDrawableObjects()) {
             freeLine.draw(canvas);
         }
 
         canvas.restore();
+
     }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -70,34 +89,46 @@ public class EditorDraw extends View {
             gestureDetector.onTouchEvent(event);
             return true;
         } else {
-            // Режим рисования: передаем события в инструмент
-            instrument.execute(event, freeLines, deletedlines, this);
+            // Режим рисования: преобразуем координаты и передаем события в инструмент
+            MotionEvent transformedEvent = transformEvent(event);
+            instrument.execute(transformedEvent,project.getEnabledPage().getDrawableObjects(),
+                    project.getEnabledPage().getDeletedDrawableObjects(), this);
             return true;
         }
     }
 
+    // Метод для преобразования координат касаний
+    private MotionEvent transformEvent(MotionEvent event) {
+        // Копируем событие, чтобы не изменять оригинал
+        MotionEvent transformedEvent = MotionEvent.obtain(event);
+
+        // Вычисляем обратную матрицу
+        transformMatrix.invert(inverseMatrix);
+
+        // Преобразуем координаты события
+        float[] coords = {event.getX(), event.getY()};
+        inverseMatrix.mapPoints(coords);
+        transformedEvent.setLocation(coords[0], coords[1]);
+
+        return transformedEvent;
+    }
+
     // Метод для очистки всех линий
     public void clear() {
-        deletedlines.addAll(freeLines);
-        freeLines.clear();
+        project.getEnabledPage().getDeletedDrawableObjects().addAll(project.getEnabledPage().getDrawableObjects());
+        project.getEnabledPage().getDrawableObjects().clear();
         invalidate(); // Перерисовываем экран
     }
 
     // Метод для удаления последней линии
     public void removeLastLine() {
-        if (!freeLines.isEmpty()) {
-            deletedlines.push(freeLines.pop());
-            freeLines.remove(deletedlines.lastElement()); // Удаляем последнюю линию
-            invalidate(); // Перерисовываем экран
-        }
+        project.getEnabledPage().undo();
+        invalidate(); // Перерисовываем экран
     }
 
     public void restoreLastLine() {
-        if (!deletedlines.isEmpty()) {
-            freeLines.push(deletedlines.pop()); // Возвращение последней линии
-            deletedlines.remove(freeLines.lastElement()); // Чистим удалённые
-            invalidate(); // Перерисовываем экран
-        }
+        project.getEnabledPage().redo();
+        invalidate(); // Перерисовываем экран
     }
 
     public Bitmap getBitmap() {
@@ -125,7 +156,6 @@ public class EditorDraw extends View {
     public void switchEditMode() {
         instrument.setMode(Instrument.mode_list.NO_EDIT);
         setEditMode(true);
-
     }
 
     // Внутренний класс для обработки масштабирования

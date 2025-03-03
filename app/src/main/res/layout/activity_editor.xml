@@ -1,149 +1,37 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Editor">
-    <!--  Основной контейнер для холста  -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/main" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" tools:context=".Editor">
+    <!--   Основной контейнер для холста   -->
+    <!--   Контейнер для кнопок   -->
+    <LinearLayout android:id="@+id/linearLayout3" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
 
-    <!--  Контейнер для кнопок  -->
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/next"
+        <ImageButton
+            android:id="@+id/add_page"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="51dp"
             android:layout_weight="1"
-            android:background="#B8BBFE"
-            android:fadingEdge="vertical"
-            android:rotationY="180"
-            app:srcCompat="@android:drawable/ic_menu_revert" />
+            android:backgroundTint="#FFFFFF"
+            android:contentDescription="ластик"
+            android:scaleType="centerInside"
+            android:src="@drawable/addpage" />
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#FF7E74"
-            android:fadingEdge="vertical"
-            app:srcCompat="@android:drawable/ic_menu_revert" />
-
-        <ImageView
-            android:id="@+id/delete"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?android:attr/textColorLink"
-            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
-
-        <Button
-            android:id="@+id/save"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Сохранить" />
-
-        <TextView
-            android:id="@+id/mode"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="mode" />
+        <ImageView android:id="@+id/next" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1" android:background="#B8BBFE" android:fadingEdge="vertical" android:rotationY="180" app:srcCompat="@android:drawable/ic_menu_revert"/>
+        <ImageView android:id="@+id/back" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1" android:background="#FF7E74" android:fadingEdge="vertical" app:srcCompat="@android:drawable/ic_menu_revert"/>
+        <ImageView android:id="@+id/delete" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1" android:background="?android:attr/textColorLink" app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"/>
+        <Button android:id="@+id/save" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1" android:text="Сохранить"/>
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/view"
-        android:layout_width="332dp"
-        android:layout_height="471dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"></FrameLayout>
-
-    <TableLayout
-        android:id="@+id/tableLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:tooltipText="chanerotate">
-
-            <SeekBar
-                android:id="@+id/chooseThicknessBar"
-                android:layout_width="465dp"
-                android:layout_height="25dp"
-                android:layout_weight="1"
-                android:max="100"
-                android:min="5" />
-
+    <FrameLayout android:id="@+id/view" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" app:layout_constraintBottom_toTopOf="@+id/tableLayout3" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/linearLayout3"/>
+    <TableLayout android:id="@+id/tableLayout3" android:layout_width="wrap_content" android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent">
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:tooltipText="chanerotate">
+            <SeekBar android:id="@+id/chooseThicknessBar" android:layout_width="465dp" android:layout_height="25dp" android:layout_weight="1" android:max="100" android:min="5"/>
         </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/eraser"
-                android:layout_width="180dp"
-                android:layout_height="51dp"
-                android:layout_weight="1"
-                android:backgroundTint="#FFFFFF"
-                android:contentDescription="ластик"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/eraser" />
-
-            <ImageButton
-                android:id="@+id/fill"
-                android:layout_width="181dp"
-                android:layout_height="51dp"
-                android:layout_weight="1"
-                android:background="#FF5351"
-                android:contentDescription="Заливка"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/fill" />
-
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <ImageButton android:id="@+id/eraser" android:layout_width="180dp" android:layout_height="51dp" android:layout_weight="1" android:backgroundTint="#FFFFFF" android:contentDescription="ластик" android:scaleType="centerInside" app:srcCompat="@drawable/eraser"/>
+            <ImageButton android:id="@+id/fill" android:layout_width="181dp" android:layout_height="51dp" android:layout_weight="1" android:background="#FF5351" android:contentDescription="Заливка" android:scaleType="centerInside" app:srcCompat="@drawable/fill"/>
         </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/pencil"
-                android:layout_width="184dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:background="#B8BBFE"
-                app:srcCompat="@drawable/pen" />
-
-            <ImageView
-                android:id="@+id/marker"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/marker" />
-
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
+            <ImageView android:id="@+id/pencil" android:layout_width="184dp" android:layout_height="48dp" android:layout_weight="1" android:background="#B8BBFE" app:srcCompat="@drawable/pen"/>
+            <ImageView android:id="@+id/marker" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1" app:srcCompat="@drawable/marker"/>
         </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
 
             <ImageButton
                 android:id="@+id/crop_rotate"
@@ -151,19 +39,11 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#FBFBFB"
+                android:contentDescription="crop_rotate"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/changeandrotate" />
-
-            <ImageView
-                android:id="@+id/chooseColorButton"
-                android:layout_width="219dp"
-                android:layout_height="46dp"
-                android:layout_weight="1"
-                android:background="#FF5351"
-                app:srcCompat="@drawable/colors" />
-
+            <ImageView android:id="@+id/chooseColorButton" android:layout_width="219dp" android:layout_height="46dp" android:layout_weight="1" android:background="#FF5351" app:srcCompat="@drawable/colors"/>
         </TableRow>
-
     </TableLayout>
 
     <ImageButton
@@ -171,19 +51,22 @@
         android:layout_width="40dp"
         android:layout_height="49dp"
         android:background="@null"
+        android:contentDescription="next_page"
         android:scaleType="centerInside"
-        app:srcCompat="@drawable/nextpage"
-        tools:layout_editor_absoluteX="371dp"
-        tools:layout_editor_absoluteY="265dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:srcCompat="@drawable/nextpage" />
 
     <ImageButton
         android:id="@+id/prew_page"
         android:layout_width="43dp"
         android:layout_height="49dp"
         android:background="@null"
+        android:contentDescription="prew_page"
         android:scaleType="centerInside"
-        app:srcCompat="@drawable/prevpage"
-        tools:layout_editor_absoluteX="-3dp"
-        tools:layout_editor_absoluteY="273dp" />
-
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:srcCompat="@drawable/prevpage" />
 </androidx.constraintlayout.widget.ConstraintLayout>
