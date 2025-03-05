@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Project {
     private List<PageHistory> pages;
+    //private List<PageHistory> DeletedPages;
     private int enabledPageIndex;
 
     Project(){

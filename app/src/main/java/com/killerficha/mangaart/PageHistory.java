@@ -25,14 +25,12 @@ public class PageHistory {
     void undo(){
         if (!drawableObjects.isEmpty()) {
             deletedDrawableObjects.push(drawableObjects.pop());
-
         }
     }
 
     void redo(){
         if (!deletedDrawableObjects.isEmpty()) {
             drawableObjects.push(deletedDrawableObjects.pop());
-
         }
     }
 }

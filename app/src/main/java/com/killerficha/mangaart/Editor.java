@@ -1,5 +1,9 @@
 package com.killerficha.mangaart;
 
+import static android.app.PendingIntent.getActivity;
+
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -10,8 +14,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
@@ -56,6 +62,7 @@ public class Editor extends AppCompatActivity {
 
         // Настроим действия кнопок
         clearButton.setOnClickListener(v -> {editorDraw.clear(); editorDraw.setEditMode(false);});
+        //Предлага.ю эту кнопку переделать для уджаление страницы с подтверждением через диалоговое окно
         removeButton.setOnClickListener(v -> editorDraw.removeLastLine());
         restoreButton.setOnClickListener(v -> editorDraw.restoreLastLine());
         eraserButton.setOnClickListener(v -> {editorDraw.instrument.setMode(Instrument.mode_list.ERASER); editorDraw.setEditMode(false);});
@@ -87,6 +94,40 @@ public class Editor extends AppCompatActivity {
         nextPageButton.setOnClickListener(v -> nextPage());
         prewPageButton.setOnClickListener(v -> lastPage());
         addPageButton.setOnClickListener(v -> addPage());
+
+    }
+
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        final String[] templates = {"2x2", "3x2", "4x2"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(Editor.getActivity()); //решить вопрос  с активити
+        builder.setTitle("Выберите шаблон")
+                .setItems(templates, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(),
+                                "Выбранный шаблон: " + templates[which],
+                                Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setPositiveButton(1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setNegativeButton(2, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    //отмена
+                    }
+                })
+
+//связать с
+        return builder.create();
     }
 
 
