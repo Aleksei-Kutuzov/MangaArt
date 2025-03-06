@@ -108,23 +108,23 @@ public class Editor extends AppCompatActivity {
         builder.setTitle("Выберите шаблон")
                 .setItems(templates, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getActivity(),
+                        Toast.makeText(Editor.getActivity(),
                                 "Выбранный шаблон: " + templates[which],
                                 Toast.LENGTH_SHORT).show();
                     }
                 })
-                .setPositiveButton(1, new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ок", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
                 })
-                .setNegativeButton(2, new DialogInterface.OnClickListener() {
+                .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     //отмена
                     }
-                })
+                });
 
 //связать с
         return builder.create();
