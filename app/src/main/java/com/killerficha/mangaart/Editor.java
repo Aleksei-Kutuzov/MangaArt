@@ -3,6 +3,7 @@ package com.killerficha.mangaart;
 import static android.app.PendingIntent.getActivity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -22,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -30,10 +32,13 @@ public class Editor extends AppCompatActivity {
     private static final int REQUEST_CODE_SAVE_FILE = 5252; // это индификатор запроса он не должен совподать с другим инд.зап. приложения
     private EditorDraw editorDraw; // Объект для рисования
 
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+        context = this;
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -97,20 +102,19 @@ public class Editor extends AppCompatActivity {
 
     }
 
-
     @NonNull
-    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         final String[] templates = {"2x2", "3x2", "4x2"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Editor.getActivity()); //решить вопрос  с активити
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(context, this)); //решить вопрос  с активити
         builder.setTitle("Выберите шаблон")
                 .setItems(templates, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(Editor.getActivity(),
-                                "Выбранный шаблон: " + templates[which],
-                                Toast.LENGTH_SHORT).show();
+                        Templates x;
+                        x = new Templates(context);
+                        x.parseToTempl(templates[which]);
+
                     }
                 })
                 .setPositiveButton("Ок", new DialogInterface.OnClickListener() {

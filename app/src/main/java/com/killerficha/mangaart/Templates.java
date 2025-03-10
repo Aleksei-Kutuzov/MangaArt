@@ -58,6 +58,7 @@ public class Templates extends View {
                 setRows(2); setCols(2);
                 cellWidth = width / getCols();
                 cellHeight = height / getRows();
+
                 break;
             case THEE_X_TWO:
                 // Рассчитываем ширину и высоту ячейки
@@ -87,6 +88,19 @@ public class Templates extends View {
         }
     }
 
+    void parseToTempl(String x){
+        switch(x){
+            case"2x2":
+                setTMode(templ.TWO_X_TWO);
+            break;
+            case"3x2":
+                setTMode(templ.THEE_X_TWO);
+                break;
+            case"4x2":
+                setTMode(templ.FOUR_X_TWO);
+                break;
 
+        }
+    }
 
 }
