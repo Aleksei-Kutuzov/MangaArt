@@ -24,7 +24,8 @@ public class Templates extends View {
         init();
     }
 
-    enum templ { TWO_X_TWO, THEE_X_TWO, FOUR_X_TWO, CUSTOM}
+    enum templ {TWO_X_TWO, THREE_X_TWO, FOUR_X_TWO, CUSTOM}
+
     templ modeT = templ.TWO_X_TWO;
     private int rows = 2; // Количество строк
     private int cols = 2; // Количество столбцов
@@ -32,11 +33,21 @@ public class Templates extends View {
     int cellWidth;
     private Paint paint;
 
-    int getRows(){return rows;}
-    void setRows(int r){ rows = r;}
+    int getRows() {
+        return rows;
+    }
 
-    int getCols(){return cols;}
-    void setCols(int c){ cols = c;}
+    void setRows(int r) {
+        rows = r;
+    }
+
+    int getCols() {
+        return cols;
+    }
+
+    void setCols(int c) {
+        cols = c;
+    }
 
 
     private void init() {
@@ -45,35 +56,40 @@ public class Templates extends View {
         paint.setStrokeWidth(2); // Толщина линий
     }
 
-    void setTMode(templ modet){this.modeT = modet;}
+    void setTMode(templ modet) {
+        this.modeT = modet;
+    }
 
 
-    void exec(Canvas canvas){
+    void exec(Canvas canvas) {
         int width = getWidth();
         int height = getHeight();
 
         switch (modeT) {
             case TWO_X_TWO:
                 // Рассчитываем ширину и высоту ячейки
-                setRows(2); setCols(2);
+                setRows(2);
+                setCols(2);
                 cellWidth = width / getCols();
                 cellHeight = height / getRows();
 
                 break;
-            case THEE_X_TWO:
+            case THREE_X_TWO:
                 // Рассчитываем ширину и высоту ячейки
-                setRows(3); setCols(2);
+                setRows(3);
+                setCols(2);
                 cellWidth = width / getCols();
                 cellHeight = height / getRows();
                 break;
             case FOUR_X_TWO:
                 // Рассчитываем ширину и высоту ячейки
-                setRows(4); setCols(2);
+                setRows(4);
+                setCols(2);
                 cellWidth = width / getCols();
                 cellHeight = height / getRows();
                 break;
-//            case CUSTOM:
-//                setCols();
+            case CUSTOM:
+                setCols();
 
         }
         for (int i = 1; i < cols; i++) {
@@ -85,21 +101,6 @@ public class Templates extends View {
         for (int i = 1; i < rows; i++) {
             int y = i * cellHeight;
             canvas.drawLine(0, y, width, y, paint);
-        }
-    }
-
-    void parseToTempl(String x){
-        switch(x){
-            case"2x2":
-                setTMode(templ.TWO_X_TWO);
-            break;
-            case"3x2":
-                setTMode(templ.THEE_X_TWO);
-                break;
-            case"4x2":
-                setTMode(templ.FOUR_X_TWO);
-                break;
-
         }
     }
 
