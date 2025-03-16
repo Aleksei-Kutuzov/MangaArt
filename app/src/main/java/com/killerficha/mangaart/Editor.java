@@ -10,20 +10,18 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -66,14 +64,29 @@ public class Editor extends AppCompatActivity {
         SeekBar chooseThicknessBar = findViewById(R.id.chooseThicknessBar);
 
         // Настроим действия кнопок
-        clearButton.setOnClickListener(v -> {editorDraw.clear(); editorDraw.setEditMode(false);});
+        clearButton.setOnClickListener(v -> {
+            editorDraw.clear();
+            editorDraw.setEditMode(false);
+        });
         //Предлага.ю эту кнопку переделать для уджаление страницы с подтверждением через диалоговое окно
         removeButton.setOnClickListener(v -> editorDraw.removeLastLine());
         restoreButton.setOnClickListener(v -> editorDraw.restoreLastLine());
-        eraserButton.setOnClickListener(v -> {editorDraw.instrument.setMode(Instrument.mode_list.ERASER); editorDraw.setEditMode(false);});
-        pencilButton.setOnClickListener(v -> {editorDraw.instrument.setMode(Instrument.mode_list.PENCIL); editorDraw.setEditMode(false);});
-        fillButton.setOnClickListener(v -> {editorDraw.instrument.setMode(Instrument.mode_list.FILL); editorDraw.setEditMode(false);});
-        markerButton.setOnClickListener(v -> {editorDraw.instrument.setMode(Instrument.mode_list.MARKER); editorDraw.setEditMode(false);});
+        eraserButton.setOnClickListener(v -> {
+            editorDraw.instrument.setMode(Instrument.mode_list.ERASER);
+            editorDraw.setEditMode(false);
+        });
+        pencilButton.setOnClickListener(v -> {
+            editorDraw.instrument.setMode(Instrument.mode_list.PENCIL);
+            editorDraw.setEditMode(false);
+        });
+        fillButton.setOnClickListener(v -> {
+            editorDraw.instrument.setMode(Instrument.mode_list.FILL);
+            editorDraw.setEditMode(false);
+        });
+        markerButton.setOnClickListener(v -> {
+            editorDraw.instrument.setMode(Instrument.mode_list.MARKER);
+            editorDraw.setEditMode(false);
+        });
         chooseThicknessBar.setProgress(editorDraw.instrument.getThickness());
         chooseColorButton.setOnClickListener(v -> chooseColor());
         chooseThicknessBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -98,43 +111,9 @@ public class Editor extends AppCompatActivity {
 
         nextPageButton.setOnClickListener(v -> nextPage());
         prewPageButton.setOnClickListener(v -> lastPage());
-        addPageButton.setOnClickListener(v -> addPage());
-
+//        addPageButton.setOnClickListener(v -> addPage());
+//        addPageButton.setOnClickListener();
     }
-
-    @NonNull
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        final String[] templates = {"2x2", "3x2", "4x2"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(context, this)); //решить вопрос  с активити
-        builder.setTitle("Выберите шаблон")
-                .setItems(templates, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Templates x;
-                        x = new Templates(context);
-                        x.parseToTempl(templates[which]);
-
-                    }
-                })
-                .setPositiveButton("Ок", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .setNegativeButton("Отмена", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    //отмена
-                    }
-                });
-
-//связать с
-        return builder.create();
-    }
-
-
     void chooseColor(){
         AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, editorDraw.instrument.getColor(), new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
@@ -201,4 +180,5 @@ public class Editor extends AppCompatActivity {
         editorDraw.project.pageAdd();
         editorDraw.invalidate();
     }
+
 }
