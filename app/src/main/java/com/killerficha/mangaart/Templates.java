@@ -89,12 +89,16 @@ public class Templates extends View {
                 cellHeight = height / getRows();
                 break;
             case CUSTOM:
-                setCols();
+//                setCols();
 
         }
         for (int i = 1; i < cols; i++) {
             int x = i * cellWidth;
-            canvas.drawLine(x, 0, x, height, paint);
+//            canvas.drawLine(0, 0, x, height, paint);
+            DrawableObject newDrawable = new FreeLine(x, 0);
+            newDrawable.setPaint(new Paint(paint));
+            freeLines.add(newDrawable);
+
         }
 
         // Рисуем горизонтальные линии
