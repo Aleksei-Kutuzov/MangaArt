@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.List;
+
 public class Templates extends View {
 
     public Templates(Context context) {
@@ -61,7 +63,8 @@ public class Templates extends View {
     }
 
 
-    void exec(Canvas canvas) {
+
+    void exec(Canvas canvas, List<DrawableObject>freeLines) {
         int width = getWidth();
         int height = getHeight();
 
@@ -104,7 +107,10 @@ public class Templates extends View {
         // Рисуем горизонтальные линии
         for (int i = 1; i < rows; i++) {
             int y = i * cellHeight;
-            canvas.drawLine(0, y, width, y, paint);
+//            canvas.drawLine(0, y, width, y, paint);
+            DrawableObject newDrawable = new FreeLine(0, y);
+            newDrawable.setPaint(new Paint(paint));
+            freeLines.add(newDrawable);
         }
     }
 
