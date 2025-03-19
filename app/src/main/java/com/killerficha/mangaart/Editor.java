@@ -28,6 +28,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class Editor extends AppCompatActivity {
 
     private static final int REQUEST_CODE_SAVE_FILE = 5252; // это индификатор запроса он не должен совподать с другим инд.зап. приложения
+    private static final int REQUEST_CODE_SAVE_PROJECT_FILE = 1;
     private EditorDraw editorDraw; // Объект для рисования
 
     Context context;
@@ -131,14 +132,24 @@ public class Editor extends AppCompatActivity {
 
     void saveProject(){
 
+
+//        // Создаем Intent для выбора директории
+//        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+//        intent.addCategory(Intent.CATEGORY_OPENABLE);
+//        intent.setType("image/png"); // Указываем тип файла (например, PNG)
+//        intent.putExtra(Intent.EXTRA_TITLE, "my comics.png"); // Предлагаемое имя файла
+//
+//        // Запускаем Intent
+//        startActivityForResult(intent, REQUEST_CODE_SAVE_FILE);
+
         // Создаем Intent для выбора директории
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("image/png"); // Указываем тип файла (например, PNG)
-        intent.putExtra(Intent.EXTRA_TITLE, "my comics.png"); // Предлагаемое имя файла
+        Intent serilization_save_intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        serilization_save_intent.addCategory(Intent.CATEGORY_OPENABLE);
+        serilization_save_intent.setType("application/octet-stream"); // Указываем тип файла (например, PNG)
+        serilization_save_intent.putExtra(Intent.EXTRA_TITLE, "my_project.bin"); // Предлагаемое имя файла
 
         // Запускаем Intent
-        startActivityForResult(intent, REQUEST_CODE_SAVE_FILE);
+        startActivityForResult(serilization_save_intent, REQUEST_CODE_SAVE_FILE);
 
     }
 
@@ -152,6 +163,32 @@ public class Editor extends AppCompatActivity {
                 // Теперь вы можете сохранить Bitmap в выбранную директорию
                 saveBitmapToUri(editorDraw.getBitmap(), uri);
             }
+        }
+        if (requestCode == REQUEST_CODE_SAVE_PROJECT_FILE && resultCode == RESULT_OK){
+            if (data != null) {
+                Uri uri = data.getData();
+                saveProjectFileToUri(uri);
+            }
+        }
+    }
+    private void saveProjectFileToUri(Uri uri) {
+        try {
+            // Открываем OutputStream для записи данных
+            java.io.OutputStream outputStream = getContentResolver().openOutputStream(uri);
+            if (outputStream != null) {
+                // Пример данных для сохранения
+                byte[] data = "Hello, this is a test file!".getBytes();
+
+                // Записываем данные в файл
+                outputStream.write(data);
+                outputStream.close();
+
+                // Уведомляем пользователя
+                android.widget.Toast.makeText(this, "Файл сохранен", android.widget.Toast.LENGTH_SHORT).show();
+            }
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+            android.widget.Toast.makeText(this, "Ошибка при сохранении файла", android.widget.Toast.LENGTH_SHORT).show();
         }
     }
 

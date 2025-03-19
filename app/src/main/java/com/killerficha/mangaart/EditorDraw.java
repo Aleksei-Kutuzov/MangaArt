@@ -1,6 +1,9 @@
 package com.killerficha.mangaart;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +13,11 @@ import android.view.ScaleGestureDetector;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class EditorDraw extends View {
 
@@ -212,4 +220,10 @@ public class EditorDraw extends View {
     public boolean isEditMode() {
         return isEditMode;
     }
+
+//    public void saveProject() throws IOException {
+//        Intent intent = new Intent(this, AnotherActivity.class);
+//        intent.putExtra("user", project);
+//        startActivity(intent);
+//    }
 }

@@ -1,5 +1,6 @@
 package com.killerficha.mangaart;
 
+import java.io.Serializable;
 import java.util.Stack;
 
 public class PageHistory {
