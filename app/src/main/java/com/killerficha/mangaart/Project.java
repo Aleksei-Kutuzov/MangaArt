@@ -2,12 +2,12 @@ package com.killerficha.mangaart;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Project {
+public class Project implements Serializable {
     private List<PageHistory> pages;
-    //private List<PageHistory> DeletedPages;
     private int enabledPageIndex;
 
     Project(){
@@ -15,9 +15,14 @@ public class Project {
         enabledPageIndex = 0;
     }
 
-    public void pageAdd(){
-        pages.add(new PageHistory());
+
+    public void pageAdd(PageHistory pageHistory){
+        pages.add(pageHistory);
         enabledPageIndex = pages.size() - 1;
+    }
+
+    public void pageAdd(){
+        pageAdd(new PageHistory());
     }
 
     public int getEnabledPageIndex() {
