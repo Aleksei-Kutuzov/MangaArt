@@ -62,13 +62,15 @@
         android:id="@+id/getToEditir"
         android:layout_width="128dp"
         android:layout_height="115dp"
-        android:layout_marginEnd="280dp"
+        android:layout_marginBottom="4dp"
         android:background="@null"
         android:backgroundTint="@null"
         android:hapticFeedbackEnabled="false"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/buttonblue" />
 
     <ImageView
@@ -80,9 +82,10 @@
         android:tint="#090505"
         app:layout_constraintBottom_toBottomOf="@+id/getToEditir"
         app:layout_constraintEnd_toEndOf="@+id/getToEditir"
-        app:layout_constraintHorizontal_bias="0.351"
+        app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="@id/getToEditir"
         app:layout_constraintTop_toTopOf="@+id/getToEditir"
+        app:layout_constraintVertical_bias="0.333"
         app:srcCompat="@drawable/pen" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

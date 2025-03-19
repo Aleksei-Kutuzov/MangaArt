@@ -1,6 +1,7 @@
 package com.killerficha.mangaart;
 
 import static android.app.PendingIntent.getActivity;
+import static android.app.ProgressDialog.show;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,7 +71,7 @@ public class Editor extends AppCompatActivity {
             editorDraw.clear();
             editorDraw.setEditMode(false);
         });
-        //Предлага.ю эту кнопку переделать для уджаление страницы с подтверждением через диалоговое окно
+        //Предлагаю эту кнопку переделать для уджаление страницы с подтверждением через диалоговое окно
         removeButton.setOnClickListener(v -> editorDraw.removeLastLine());
         restoreButton.setOnClickListener(v -> editorDraw.restoreLastLine());
         eraserButton.setOnClickListener(v -> {
@@ -113,7 +115,18 @@ public class Editor extends AppCompatActivity {
         nextPageButton.setOnClickListener(v -> nextPage());
         prewPageButton.setOnClickListener(v -> lastPage());
 //        addPageButton.setOnClickListener(v -> addPage());
-//        addPageButton.setOnClickListener();
+        addPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setItems(this, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(this, "шаблон " + [], Toast.LENGTH_SHORT).show();
+                                    // The 'which' argument contains the index position of the selected item.
+                                }
+                            });
+            }
+        });
     }
     void chooseColor(){
         AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, editorDraw.instrument.getColor(), new AmbilWarnaDialog.OnAmbilWarnaListener() {
@@ -214,7 +227,7 @@ public class Editor extends AppCompatActivity {
     }
 
     private void addPage() {
-        editorDraw.project.pageAdd();
+        editorDraw.project.pageAdd(new PageHistory());
         editorDraw.invalidate();
     }
 
