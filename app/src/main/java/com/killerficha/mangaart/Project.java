@@ -43,6 +43,9 @@ public class Project implements Serializable {
     void setCols(int c) {
         cols = c;
     }
+    public void setModeT(modeT modet) {
+        this.modeT = modet;
+    }
 
     Project(){
         pages = new ArrayList<>();
