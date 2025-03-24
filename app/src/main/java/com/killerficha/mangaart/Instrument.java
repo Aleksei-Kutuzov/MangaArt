@@ -140,7 +140,6 @@ public class Instrument {
                                 // Создаем DrawableObject с залитым Bitmap
                                 DrawableObject newDrawable = new BitmapObject(filledBitmap);
                                 freeLines.add(newDrawable);
-
                                 // Обновляем Canvas
                                 ED.invalidate();
                             }

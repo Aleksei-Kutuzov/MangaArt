@@ -139,6 +139,8 @@ public class EditorDraw extends View {
         // 2. Создаем Canvas, связанный с этим Bitmap
         Canvas canvas = new Canvas(bitmap);
 
+        canvas.concat(inverseMatrix);
+
         // 3. Рисуем фон View (если он есть)
         if (getBackground() != null) {
             getBackground().draw(canvas);
