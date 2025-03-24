@@ -4,8 +4,11 @@ import static android.opengl.ETC1.getHeight;
 import static android.opengl.ETC1.getWidth;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.AbstractCollection;
@@ -17,8 +20,6 @@ public class Project implements Serializable {
     private List<DrawableObject> freeLines;
 
     private int enabledPageIndex;
-    Canvas canvas;
-
     enum templ {EMPTY_T, TWO_X_TWO, THREE_X_TWO, FOUR_X_TWO, CUSTOM}
 
     templ modeT = templ.TWO_X_TWO;
@@ -26,12 +27,11 @@ public class Project implements Serializable {
     private int cols = 2; // Количество столбцов
     int cellHeight;
     int cellWidth;
-    private Paint paint;
+    Paint paintTempl;
 
     int getRows() {
         return rows;
     }
-
     void setRows(int r) {
         rows = r;
     }
@@ -43,9 +43,64 @@ public class Project implements Serializable {
     void setCols(int c) {
         cols = c;
     }
-    public void setModeT(templ modet) {
-        this.modeT = modet;
+
+    void TemplateLines(@NonNull Canvas canvas){
+        paintTempl = new Paint();
+        paintTempl.setStyle(Paint.Style.STROKE);
+        paintTempl.setStrokeWidth(5);
+        paintTempl.setColor(Color.BLACK);
+        int width = canvas.getWidth();
+        int height = canvas.getHeight();
+
+//        switch (modeT) {
+//            case EMPTY_T:
+//                break;
+//            case TWO_X_TWO:
+//                // Рассчитываем ширину и высоту ячейки
+        setRows(2);
+        setCols(2);
+        cellWidth = width / getCols();
+        cellHeight = height / getRows();
+//
+//                break;
+//            case THREE_X_TWO:
+//                // Рассчитываем ширину и высоту ячейк
+//                setRows(3);
+//                setCols(2);
+//                cellWidth = width / getCols();
+//                cellHeight = height / getRows();
+//                break;
+//            case FOUR_X_TWO:
+//                // Рассчитываем ширину и высоту ячейки
+//                setRows(4);
+//                setCols(2);
+//                cellWidth = width / getCols();
+//                cellHeight = height / getRows();
+//                break;
+//            //case CUSTOM:
+////                setCols();
+//        }
+//        pageAdd();
+        for (int i = 1; i < cols; i++) {
+            int x = i * cellWidth;
+            canvas.drawLine(0, x, x, height, paintTempl);
+//            DrawableObject newDrawable = new FreeLine(x, 0);
+//            newDrawable.setPaint(paintTempl);
+//            freeLines.add(newDrawable);
+        }
+        // Рисуем горизонтальные линии
+        for (int i = 1; i < rows; i++) {
+            int y = i * cellHeight;
+            canvas.drawLine(0, y, width, y, paintTempl);
+//            DrawableObject newDrawable = new FreeLine(0, y);
+//            newDrawable.setPaint(paintTempl);
+//            freeLines.add(newDrawable);
+        }
     }
+
+//    public void setModeT(templ modet) {
+//        this.modeT = modet;
+//    }
 
     Project(){
         pages = new ArrayList<>();
@@ -57,34 +112,12 @@ public class Project implements Serializable {
         pages.add(pageHistory);
         enabledPageIndex = pages.size() - 1;
     }
-    //public void pageAdd(){pageAdd(new PageHistory());}
+
+//    public void pageAdd(){pageAdd(new PageHistory());}
 
     public void pageAdd(){
         pageAdd(new PageHistory());
-        int width = canvas.getWidth();
-        int height = canvas.getHeight();
-
-                setRows(2);
-                setCols(2);
-                cellWidth = width / getCols();
-                cellHeight = height / getRows();
-
-        for (int i = 1; i < cols; i++) {
-            int x = i * cellWidth;
-//            canvas.drawLine(0, 0, x, height, paint);
-            DrawableObject newDrawable = new FreeLine(x, 0);
-            newDrawable.setPaint(new Paint(paint));
-            freeLines.add(newDrawable);
-
-        }
-        // Рисуем горизонтальные линии
-        for (int i = 1; i < rows; i++) {
-            int y = i * cellHeight;
-//            canvas.drawLine(0, y, width, y, paint);
-            DrawableObject newDrawable = new FreeLine(0, y);
-            newDrawable.setPaint(new Paint(paint));
-            freeLines.add(newDrawable);
-        }
+        TemplateLines(EditorDraw.canvas);
     }
 
     public int getEnabledPageIndex() {

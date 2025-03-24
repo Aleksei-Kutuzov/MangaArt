@@ -118,13 +118,13 @@ public class Editor extends AppCompatActivity {
 //        addPageButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                    builder.setItems(this, new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int which) {
-//                            Toast.makeText(this, "шаблон " + [], Toast.LENGTH_SHORT).show();
-//                                    // The 'which' argument contains the index position of the selected item.
-//                                }
-//                            });
+////                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+////                    builder.setItems(this, new DialogInterface.OnClickListener() {
+////                                public void onClick(DialogInterface dialog, int which) {
+////                            Toast.makeText(this, "шаблон " + [], Toast.LENGTH_SHORT).show();
+////                                    // The 'which' argument contains the index position of the selected item.
+////                                }
+////                            });
 //            }
 //        });
     }
@@ -144,8 +144,6 @@ public class Editor extends AppCompatActivity {
     }
 
     void saveProject(){
-
-
 //        // Создаем Intent для выбора директории
 //        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
 //        intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -227,7 +225,7 @@ public class Editor extends AppCompatActivity {
     }
 
     private void addPage() {
-        editorDraw.project.pageAdd(new PageHistory());
+        editorDraw.project.pageAdd();
         editorDraw.invalidate();
     }
 

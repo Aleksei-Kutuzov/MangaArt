@@ -24,12 +24,28 @@
             <SeekBar android:id="@+id/chooseThicknessBar" android:layout_width="465dp" android:layout_height="25dp" android:layout_weight="1" android:max="100" android:min="5"/>
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
-            <ImageButton android:id="@+id/eraser" android:layout_width="180dp" android:layout_height="51dp" android:layout_weight="1" android:backgroundTint="#FFFFFF" android:contentDescription="ластик" android:scaleType="centerInside" app:srcCompat="@drawable/eraser"/>
+
+            <ImageButton
+                android:id="@+id/eraser"
+                android:layout_width="180dp"
+                android:layout_height="51dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF"
+                android:contentDescription="ластик"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/eraser" />
             <ImageButton android:id="@+id/fill" android:layout_width="181dp" android:layout_height="51dp" android:layout_weight="1" android:background="#FF5351" android:contentDescription="Заливка" android:scaleType="centerInside" app:srcCompat="@drawable/fill"/>
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
             <ImageView android:id="@+id/pencil" android:layout_width="184dp" android:layout_height="48dp" android:layout_weight="1" android:background="#B8BBFE" app:srcCompat="@drawable/pen"/>
-            <ImageView android:id="@+id/marker" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1" app:srcCompat="@drawable/marker"/>
+
+            <ImageView
+                android:id="@+id/marker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#FFFFFF"
+                app:srcCompat="@drawable/marker" />
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
 
