@@ -114,19 +114,19 @@ public class Editor extends AppCompatActivity {
 
         nextPageButton.setOnClickListener(v -> nextPage());
         prewPageButton.setOnClickListener(v -> lastPage());
-//        addPageButton.setOnClickListener(v -> addPage());
-        addPageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setItems(this, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(this, "шаблон " + [], Toast.LENGTH_SHORT).show();
-                                    // The 'which' argument contains the index position of the selected item.
-                                }
-                            });
-            }
-        });
+        addPageButton.setOnClickListener(v -> addPage());
+//        addPageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                    builder.setItems(this, new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int which) {
+//                            Toast.makeText(this, "шаблон " + [], Toast.LENGTH_SHORT).show();
+//                                    // The 'which' argument contains the index position of the selected item.
+//                                }
+//                            });
+//            }
+//        });
     }
     void chooseColor(){
         AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, editorDraw.instrument.getColor(), new AmbilWarnaDialog.OnAmbilWarnaListener() {
