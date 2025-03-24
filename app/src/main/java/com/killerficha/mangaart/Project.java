@@ -43,7 +43,7 @@ public class Project implements Serializable {
     void setCols(int c) {
         cols = c;
     }
-    public void setModeT(modeT modet) {
+    public void setModeT(templ modet) {
         this.modeT = modet;
     }
 
@@ -57,43 +57,18 @@ public class Project implements Serializable {
         pages.add(pageHistory);
         enabledPageIndex = pages.size() - 1;
     }
-
-    public void pageAdd(){pageAdd(new PageHistory());}
+    //public void pageAdd(){pageAdd(new PageHistory());}
 
     public void pageAdd(){
-//pageAdd();
+        pageAdd(new PageHistory());
         int width = canvas.getWidth();
         int height = canvas.getHeight();
 
-        switch (modeT) {
-            case EMPTY_T:
-                break;
-            case TWO_X_TWO:
-                // Рассчитываем ширину и высоту ячейки
                 setRows(2);
                 setCols(2);
                 cellWidth = width / getCols();
                 cellHeight = height / getRows();
 
-                break;
-            case THREE_X_TWO:
-                // Рассчитываем ширину и высоту ячейк
-                setRows(3);
-                setCols(2);
-                cellWidth = width / getCols();
-                cellHeight = height / getRows();
-                break;
-            case FOUR_X_TWO:
-                // Рассчитываем ширину и высоту ячейки
-                setRows(4);
-                setCols(2);
-                cellWidth = width / getCols();
-                cellHeight = height / getRows();
-                break;
-            //case CUSTOM:
-//                setCols();
-        }
-        pageAdd();
         for (int i = 1; i < cols; i++) {
             int x = i * cellWidth;
 //            canvas.drawLine(0, 0, x, height, paint);
