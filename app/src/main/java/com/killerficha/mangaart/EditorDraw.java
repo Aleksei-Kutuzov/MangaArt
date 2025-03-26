@@ -25,7 +25,7 @@ public class EditorDraw extends View {
 
     public Instrument instrument;
 
-    Canvas canvas;
+    static Canvas canvas;
     Bitmap img_bitmap;
 
     // Добавляем ScaleGestureDetector и GestureDetector
@@ -53,7 +53,7 @@ public class EditorDraw extends View {
 
 
         project = new Project();
-        project.pageAdd();
+        project.pageAdd(new PageHistory());
 
     }
 
