@@ -2,6 +2,7 @@ package com.killerficha.mangaart.ProjectInstruments;
 
 import com.killerficha.mangaart.DrawableComponents.DrawableObject;
 
+import java.io.Serializable;
 import java.util.Stack;
 
 public class PageHistory {
@@ -27,14 +28,12 @@ public class PageHistory {
     public void undo(){
         if (!drawableObjects.isEmpty()) {
             deletedDrawableObjects.push(drawableObjects.pop());
-
         }
     }
 
     public void redo(){
         if (!deletedDrawableObjects.isEmpty()) {
             drawableObjects.push(deletedDrawableObjects.pop());
-
         }
     }
 }

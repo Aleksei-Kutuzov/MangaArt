@@ -1,11 +1,12 @@
 package com.killerficha.mangaart.ProjectInstruments;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Project {
+public class Project implements Serializable {
     private List<PageHistory> pages;
     private int enabledPageIndex;
 
@@ -26,10 +27,20 @@ public class Project {
         pages = new ArrayList<>();
         enabledPageIndex = 0;
     }
+    public void pageAdd(PageHistory pageHistory){
+        pages.add(pageHistory);
+        enabledPageIndex = pages.size() - 1;
+    }
 
     public void pageAdd(){
-        pages.add(new PageHistory());
-        enabledPageIndex = pages.size() - 1;
+        pageAdd(new PageHistory());
+    }
+
+    public void pageDelete() {
+        if (pages.size() != 1) {
+            enabledPageIndex = pages.size() - 2;
+            pages.remove(pages.size() - 1);
+        }
     }
 
     public int getEnabledPageIndex() {
