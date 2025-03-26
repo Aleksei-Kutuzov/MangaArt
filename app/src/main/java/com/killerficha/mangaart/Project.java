@@ -86,11 +86,12 @@ public class Project implements Serializable {
             freeLines.add(newDrawable);
         }
     }
-    public void pageDelete(PageHistory pageHistory){
-        enabledPageIndex = pages.size() - 2;
-        pages.remove(pages.size()-1);
+    public void pageDelete() {
+        if (pages.size() != 1) {
+            enabledPageIndex = pages.size() - 2;
+            pages.remove(pages.size() - 1);
+        }
     }
-
     public int getEnabledPageIndex() {
         return enabledPageIndex;
     }

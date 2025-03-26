@@ -67,6 +67,8 @@ public class Editor extends AppCompatActivity {
         SeekBar chooseThicknessBar = findViewById(R.id.chooseThicknessBar);
 
         // Настроим действия кнопок
+
+        //Нужно решить проблему с первой страницей, так как при удалении приложение вылетает
         clearButton.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Для подтвержение удаление страницы нажмите ОК").setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -83,7 +85,6 @@ public class Editor extends AppCompatActivity {
             }).create().show();
             editorDraw.setEditMode(false);
         });
-        //Предлагаю эту кнопку переделать для уджаление страницы с подтверждением через диалоговое окно
         removeButton.setOnClickListener(v -> editorDraw.removeLastLine());
         restoreButton.setOnClickListener(v -> editorDraw.restoreLastLine());
         eraserButton.setOnClickListener(v -> {
@@ -243,7 +244,7 @@ public class Editor extends AppCompatActivity {
         editorDraw.invalidate();
     }
     private void DeletePage() {
-        editorDraw.project.pageDelete(new PageHistory());
+        editorDraw.project.pageDelete();
         editorDraw.invalidate();
     }
 
