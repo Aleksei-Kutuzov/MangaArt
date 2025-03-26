@@ -5,11 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.util.Log;
 import android.view.ScaleGestureDetector;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.killerficha.mangaart.DrawableComponents.DrawableObject;
+import com.killerficha.mangaart.ProjectInstruments.Project;
 
 public class EditorDraw extends View {
 

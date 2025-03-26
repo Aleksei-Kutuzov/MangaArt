@@ -1,13 +1,12 @@
-package com.killerficha.mangaart;
+package com.killerficha.mangaart.DrawableComponents;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import androidx.annotation.NonNull;
 
-public class BitmapObject extends DrawableObject{
+public class BitmapObject extends DrawableObject {
     Bitmap bitmap;
     Paint paint;
     public BitmapObject(Bitmap bitmap) {

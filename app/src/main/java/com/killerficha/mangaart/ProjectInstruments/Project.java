@@ -1,15 +1,28 @@
-package com.killerficha.mangaart;
+package com.killerficha.mangaart.ProjectInstruments;
 
-import android.util.Log;
-
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Project {
     private List<PageHistory> pages;
     private int enabledPageIndex;
 
-    Project(){
+    public String projectName;
+    public Date projectCreateDate;
+
+    public Project(){
+        new Project("untitled_project");
+    }
+
+    public Project(String projectName){
+        new Project(projectName, new Date());
+    }
+
+    public Project(String projectName, Date projectCreateDate){
+        this.projectName = projectName;
+        this.projectCreateDate = projectCreateDate;
         pages = new ArrayList<>();
         enabledPageIndex = 0;
     }

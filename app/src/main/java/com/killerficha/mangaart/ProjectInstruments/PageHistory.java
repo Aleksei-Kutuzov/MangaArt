@@ -1,4 +1,6 @@
-package com.killerficha.mangaart;
+package com.killerficha.mangaart.ProjectInstruments;
+
+import com.killerficha.mangaart.DrawableComponents.DrawableObject;
 
 import java.util.Stack;
 
@@ -22,14 +24,14 @@ public class PageHistory {
         return drawableObjects;
     }
 
-    void undo(){
+    public void undo(){
         if (!drawableObjects.isEmpty()) {
             deletedDrawableObjects.push(drawableObjects.pop());
 
         }
     }
 
-    void redo(){
+    public void redo(){
         if (!deletedDrawableObjects.isEmpty()) {
             drawableObjects.push(deletedDrawableObjects.pop());
 

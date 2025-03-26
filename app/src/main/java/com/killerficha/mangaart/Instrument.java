@@ -1,13 +1,8 @@
 package com.killerficha.mangaart;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Point;
-import android.graphics.Shader;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -18,6 +13,11 @@ import java.util.List;
 import java.util.Queue;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
+
+import com.killerficha.mangaart.DrawableComponents.BitmapObject;
+import com.killerficha.mangaart.DrawableComponents.DrawableObject;
+import com.killerficha.mangaart.DrawableComponents.FreeLine;
+import com.killerficha.mangaart.DrawableComponents.StraightLine;
 
 //import org.opencv.android.Utils;
 //import org.opencv.core.CvType;

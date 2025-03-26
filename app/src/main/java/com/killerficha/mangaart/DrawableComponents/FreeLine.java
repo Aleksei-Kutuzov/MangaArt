@@ -1,9 +1,8 @@
-package com.killerficha.mangaart;
+package com.killerficha.mangaart.DrawableComponents;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.util.Log;
 
 // класс для представления свободной линии
 public class FreeLine extends DrawableObject {
@@ -15,7 +14,7 @@ public class FreeLine extends DrawableObject {
         path.moveTo(x, y);
     }
 
-    FreeLine(float startX, float startY) {
+    public FreeLine(float startX, float startY) {
         paint = new Paint();
         path = new Path();
         path.reset();

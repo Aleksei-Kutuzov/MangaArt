@@ -1,4 +1,4 @@
-package com.killerficha.mangaart;
+package com.killerficha.mangaart.DrawableComponents;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
