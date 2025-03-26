@@ -22,6 +22,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.killerficha.mangaart.ProjectInstruments.PageHistory;
+
 import java.io.IOException;
 import java.io.OutputStream;
 

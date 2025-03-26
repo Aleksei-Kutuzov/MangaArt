@@ -11,7 +11,7 @@ public class PageHistory {
 
 
 
-    PageHistory(){
+    public PageHistory(){
         drawableObjects = new Stack<>();
         deletedDrawableObjects = new Stack<>();
 
