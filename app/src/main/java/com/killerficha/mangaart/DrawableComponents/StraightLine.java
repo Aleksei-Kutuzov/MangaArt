@@ -6,7 +6,7 @@ import android.util.Log;
 
 // Вспомогательный класс для представления линии
 public class StraightLine extends FreeLine {
-    StraightLine(float startX, float startY) {
+    public StraightLine(float startX, float startY) {
         super(startX, startY);
         this.path.lineTo(startX, startY);
     }

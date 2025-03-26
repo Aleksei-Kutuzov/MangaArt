@@ -17,6 +17,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 //import org.opencv.android.OpenCVLoader;
 
+import com.killerficha.mangaart.PDB.ProjectsDataBaseOpener;
+
+import java.util.Date;
+
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 
@@ -28,11 +32,14 @@ public class MainActivity extends AppCompatActivity {
 
     ImageButton editorButton;
     private Uri selectedDirectoryUri;
-
+    ProjectsDataBaseOpener opener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        opener = new ProjectsDataBaseOpener(this);
+        opener.insert(String.valueOf("test").getBytes(), "__TEST__", new Date());
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

@@ -14,11 +14,11 @@ public class Project implements Serializable {
     public Date projectCreateDate;
 
     public Project(){
-        new Project("untitled_project");
+        this("untitled_project");
     }
 
     public Project(String projectName){
-        new Project(projectName, new Date());
+        this(projectName, new Date());
     }
 
     public Project(String projectName, Date projectCreateDate){
@@ -33,7 +33,9 @@ public class Project implements Serializable {
     }
 
     public void pageAdd(){
-        pageAdd(new PageHistory());
+        PageHistory new_page_history = new PageHistory();
+        pages.add(new_page_history);
+        enabledPageIndex = pages.size() - 1;
     }
 
     public void pageDelete() {
