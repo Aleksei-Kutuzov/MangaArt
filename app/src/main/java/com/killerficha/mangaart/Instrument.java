@@ -17,6 +17,7 @@ import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 import com.killerficha.mangaart.DrawableComponents.BitmapObject;
 import com.killerficha.mangaart.DrawableComponents.DrawableObject;
 import com.killerficha.mangaart.DrawableComponents.FreeLine;
+import com.killerficha.mangaart.DrawableComponents.SerialisePaint;
 import com.killerficha.mangaart.DrawableComponents.StraightLine;
 
 //import org.opencv.android.Utils;
@@ -83,7 +84,7 @@ public class Instrument {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Начало рисования
                     DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
-                    newDrawable.setPaint(new Paint(paint));
+                    newDrawable.setPaint(new SerialisePaint(paint));
                     freeLines.add(newDrawable);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     // Рисуем линию при движении
@@ -96,7 +97,7 @@ public class Instrument {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Начало рисования
                     DrawableObject newDrawable = new StraightLine(event.getX(), event.getY());
-                    newDrawable.setPaint(new Paint(paint));
+                    newDrawable.setPaint(new SerialisePaint(paint));
                     freeLines.add(newDrawable);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     // Рисуем линию при движении
@@ -108,7 +109,7 @@ public class Instrument {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Начало рисования
                     DrawableObject newDrawable = new FreeLine(event.getX(), event.getY());
-                    newDrawable.setPaint(new Paint(eraserPaint));
+                    newDrawable.setPaint(new SerialisePaint(eraserPaint));
                     freeLines.add(newDrawable);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                     // Рисуем линию при движении

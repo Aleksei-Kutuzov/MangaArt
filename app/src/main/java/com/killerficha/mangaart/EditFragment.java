@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.killerficha.mangaart.ProjectInstruments.Project;
+
 public class EditFragment extends Fragment {
 
     private EditorDraw editorDraw;
@@ -23,7 +25,7 @@ public class EditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Инициализируем custom View для рисования
-        editorDraw = new EditorDraw(getContext());
+        editorDraw = new EditorDraw(getContext(), new Project("tfr"));
         return editorDraw;
     }
 

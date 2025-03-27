@@ -4,11 +4,14 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-public class DrawableObject {
-    Path path;
-    Paint paint;
+import java.io.Serializable;
 
-    public void setPaint(Paint paint) {
+public class DrawableObject implements Serializable {
+    private static final long serialVersionUID = 1L;
+    SerialisePath path;
+    SerialisePaint paint;
+
+    public void setPaint(SerialisePaint paint) {
         this.paint = paint;
         this.paint.setAntiAlias(false);
     }

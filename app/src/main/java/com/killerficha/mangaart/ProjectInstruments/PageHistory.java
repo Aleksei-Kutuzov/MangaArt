@@ -5,7 +5,8 @@ import com.killerficha.mangaart.DrawableComponents.DrawableObject;
 import java.io.Serializable;
 import java.util.Stack;
 
-public class PageHistory {
+public class PageHistory implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Stack<DrawableObject> drawableObjects;
     private Stack<DrawableObject> deletedDrawableObjects;
 

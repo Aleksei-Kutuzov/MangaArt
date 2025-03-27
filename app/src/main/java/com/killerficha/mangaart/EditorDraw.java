@@ -45,7 +45,7 @@ public class EditorDraw extends View {
     private Matrix transformMatrix = new Matrix();
     private Matrix inverseMatrix = new Matrix();
 
-    public EditorDraw(Context context) {
+    public EditorDraw(Context context, Project project) {
         super(context);
         instrument = new Instrument();
 
@@ -54,8 +54,7 @@ public class EditorDraw extends View {
         gestureDetector = new GestureDetector(context, new GestureListener());
 
 
-        project = new Project();
-        project.pageAdd();
+        this.project = project;
 
     }
 

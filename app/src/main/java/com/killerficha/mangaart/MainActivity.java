@@ -1,13 +1,15 @@
 package com.killerficha.mangaart;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -17,28 +19,22 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 //import org.opencv.android.OpenCVLoader;
 
+import com.killerficha.mangaart.PDB.ProjectInfo;
 import com.killerficha.mangaart.PDB.ProjectsDataBaseOpener;
-
-import java.util.Date;
-
-import yuku.ambilwarna.AmbilWarnaDialog;
-
-
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_CHOOSE_DIRECTORY = 1;
-    ImageButton createButton;
-
-    ImageButton editorButton;
+    private ImageButton createButton;
+    private ImageButton editorButton;
     private Uri selectedDirectoryUri;
-    ProjectsDataBaseOpener opener;
+    private ProjectsDataBaseOpener dbHelper;
+    private SimpleCursorAdapter adapter;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        opener = new ProjectsDataBaseOpener(this);
-        opener.insert(String.valueOf("test").getBytes(), "__TEST__", new Date());
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
@@ -48,28 +44,55 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-//        if (!OpenCVLoader.initDebug()) {
-//            Log.e("OpenCV", "Initialization failed");
-//        } else {
-//            Log.d("OpenCV", "Initialization succeeded");
-//        }
+        // Получаем экземпляр БД через синглтон
+        dbHelper = ProjectsDataBaseOpener.getInstance(this);
 
-        //int defaultColor = Color.BLACK;
+        // Настройка ListView
+        listView = findViewById(R.id.projectsListview);
+        setupListView();
+
         createButton = findViewById(R.id.create);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent= new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-                startActivityForResult(intent, REQUEST_CODE_CHOOSE_DIRECTORY);
-            }
+        createButton.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            startActivityForResult(intent, REQUEST_CODE_CHOOSE_DIRECTORY);
         });
 
-
         editorButton = findViewById(R.id.getToEditir);
-        editorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent= new Intent(MainActivity.this, Editor.class);
+        editorButton.setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, Editor.class));
+        });
+    }
+
+    private void setupListView() {
+        // Получаем курсор с данными
+        Cursor cursor = dbHelper.getAllProjectsWithFormattedDate();
+
+        // Какие столбцы из курсора будем использовать
+        String[] fromColumns = {"NAME", "formatted_date"};
+
+        // В какие View будем выводить данные
+        int[] toViews = {R.id.project_name, R.id.project_date};
+
+        // Создаем адаптер
+        adapter = new SimpleCursorAdapter(
+                this,
+                R.layout.project_list_item, // макет строки
+                cursor,
+                fromColumns,
+                toViews,
+                0);
+
+        // Назначаем адаптер ListView
+        listView.setAdapter(adapter);
+
+        // Обработчик кликов
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            ProjectInfo project = dbHelper.select_project_info(id);
+            if (project != null) {
+                Toast.makeText(this, "Выбран: " + project.getName(), Toast.LENGTH_SHORT).show();
+                // Можно открыть редактор с выбранным проектом
+                Intent intent = new Intent(MainActivity.this, Editor.class);
+                intent.putExtra("project_id", id);
                 startActivity(intent);
             }
         });
@@ -81,12 +104,31 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE_CHOOSE_DIRECTORY && resultCode == RESULT_OK) {
             if (data != null) {
-                // Сохраняем URI выбранной директории
                 selectedDirectoryUri = data.getData();
-
-                // Показываем диалог для ввода названия папки
                 startActivity(new Intent(MainActivity.this, Editor.class));
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Обновляем список при возвращении на экран
+        refreshProjectList();
+    }
+
+    private void refreshProjectList() {
+        Cursor newCursor = dbHelper.getAllProjectsWithFormattedDate();
+        adapter.changeCursor(newCursor);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Закрываем курсор
+        if (adapter != null && adapter.getCursor() != null) {
+            adapter.getCursor().close();
+        }
+        // Не закрываем dbHelper - он синглтон и будет жить всё время работы приложения
     }
 }

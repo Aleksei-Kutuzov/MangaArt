@@ -18,7 +18,7 @@ public class StraightLine extends FreeLine {
     }
 
     @Override
-    public void setPaint(Paint paint) {
+    public void setPaint(SerialisePaint paint) {
         super.setPaint(paint);
         paint.setAlpha(128);
         paint.setAntiAlias(false);

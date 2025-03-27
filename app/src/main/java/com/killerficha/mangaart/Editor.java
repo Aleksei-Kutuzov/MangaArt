@@ -23,6 +23,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.killerficha.mangaart.ProjectInstruments.PageHistory;
+import com.killerficha.mangaart.ProjectInstruments.Project;
+import com.killerficha.mangaart.ProjectInstruments.ProjectLoader;
+import com.killerficha.mangaart.ProjectInstruments.ProjectSaver;
+import com.killerficha.mangaart.ProjectInstruments.ProjectSerializerOrDeserializer;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -37,6 +41,8 @@ public class Editor extends AppCompatActivity {
 
     Context context;
 
+    Long projectID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +54,24 @@ public class Editor extends AppCompatActivity {
         // Получаем ссылку на контейнер FrameLayout
         FrameLayout drawingContainer = findViewById(R.id.view);
 
+        Project project;
+        projectID = getIntent().getLongExtra("project_id", -1L);
+        if (projectID != -1){
+            ProjectLoader projectLoader = new ProjectLoader(projectID, context);
+            try {
+                project = projectLoader.loadProject();
+                project.pageAdd();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            project = new Project("untitled");
+            project.pageAdd();
+        }
+
+
         // Инициализируем EditorDraw и добавляем его в контейнер
-        editorDraw = new EditorDraw(this);
+        editorDraw = new EditorDraw(this, project);
         drawingContainer.addView(editorDraw);
 
         // Настроим кнопки для управления холстом
@@ -170,14 +192,21 @@ public class Editor extends AppCompatActivity {
 //        // Запускаем Intent
 //        startActivityForResult(intent, REQUEST_CODE_SAVE_FILE);
 
-        // Создаем Intent для выбора директории
-        Intent serilization_save_intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-        serilization_save_intent.addCategory(Intent.CATEGORY_OPENABLE);
-        serilization_save_intent.setType("application/octet-stream"); // Указываем тип файла (например, PNG)
-        serilization_save_intent.putExtra(Intent.EXTRA_TITLE, "my_project.bin"); // Предлагаемое имя файла
+//        // Создаем Intent для выбора директории
+//        Intent serilization_save_intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+//        serilization_save_intent.addCategory(Intent.CATEGORY_OPENABLE);
+//        serilization_save_intent.setType("application/octet-stream"); // Указываем тип файла (например, PNG)
+//        serilization_save_intent.putExtra(Intent.EXTRA_TITLE, "my_project.bin"); // Предлагаемое имя файла
+//
+//        // Запускаем Intent
+//        startActivityForResult(serilization_save_intent, REQUEST_CODE_SAVE_FILE);
 
-        // Запускаем Intent
-        startActivityForResult(serilization_save_intent, REQUEST_CODE_SAVE_FILE);
+        ProjectSaver ps = new ProjectSaver(editorDraw.project, context);
+        try {
+            ps.saveProject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

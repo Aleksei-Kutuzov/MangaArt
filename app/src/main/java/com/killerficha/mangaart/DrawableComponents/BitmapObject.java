@@ -8,10 +8,10 @@ import androidx.annotation.NonNull;
 
 public class BitmapObject extends DrawableObject {
     Bitmap bitmap;
-    Paint paint;
+    SerialisePaint paint;
     public BitmapObject(Bitmap bitmap) {
         this.bitmap = bitmap;
-        paint = new Paint();
+        paint = new SerialisePaint();
         //paint.setAntiAlias(true);
         //paint.setFilterBitmap(true);
         //paint.setDither(true);

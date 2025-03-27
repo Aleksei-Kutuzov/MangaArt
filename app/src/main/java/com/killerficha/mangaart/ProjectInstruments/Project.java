@@ -1,38 +1,37 @@
 package com.killerficha.mangaart.ProjectInstruments;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Project implements Serializable {
-    private List<PageHistory> pages;
-    private int enabledPageIndex;
+    // Добавляем serialVersionUID для контроля версий
+    private static final long serialVersionUID = 1L;
 
+    private List<PageHistory> pages;
+    private int enabledPageIndex = 0;
     public String projectName;
     public Date projectCreateDate;
 
-    public Project(){
-        this("untitled_project");
-    }
-
-    public Project(String projectName){
+    public Project(String projectName) {
         this(projectName, new Date());
     }
 
-    public Project(String projectName, Date projectCreateDate){
+    public Project(String projectName, Date projectCreateDate) {
         this.projectName = projectName;
         this.projectCreateDate = projectCreateDate;
-        pages = new ArrayList<>();
-        enabledPageIndex = 0;
+        this.pages = new ArrayList<>();
+        this.enabledPageIndex = 0;
     }
-    public void pageAdd(PageHistory pageHistory){
+
+    // Все остальные методы остаются без изменений
+    public void pageAdd(PageHistory pageHistory) {
         pages.add(pageHistory);
         enabledPageIndex = pages.size() - 1;
     }
 
-    public void pageAdd(){
+    public void pageAdd() {
         PageHistory new_page_history = new PageHistory();
         pages.add(new_page_history);
         enabledPageIndex = pages.size() - 1;
@@ -61,19 +60,17 @@ public class Project implements Serializable {
         return pages.get(getEnabledPageIndex());
     }
 
-    public void nextPage(){
+    public void nextPage() {
         enabledPageIndex++;
-        if (pages.size() - 1 < enabledPageIndex){
+        if (pages.size() - 1 < enabledPageIndex) {
             enabledPageIndex--;
         }
     }
 
-    public void lastPage(){
+    public void lastPage() {
         enabledPageIndex--;
-        if (enabledPageIndex < 0){
+        if (enabledPageIndex < 0) {
             enabledPageIndex = 0;
         }
     }
-
-
 }

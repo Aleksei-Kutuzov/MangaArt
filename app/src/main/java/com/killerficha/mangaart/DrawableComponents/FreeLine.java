@@ -7,7 +7,7 @@ import android.graphics.Path;
 // класс для представления свободной линии
 public class FreeLine extends DrawableObject {
 
-    Path path;
+    SerialisePath path;
     Paint paint;
 
     public void moveTo(float x, float y) {
@@ -16,13 +16,13 @@ public class FreeLine extends DrawableObject {
 
     public FreeLine(float startX, float startY) {
         paint = new Paint();
-        path = new Path();
+        path = new SerialisePath();
         path.reset();
         path.moveTo(startX, startY);
     }
 
     @Override
-    public void setPaint(Paint paint) {
+    public void setPaint(SerialisePaint paint) {
         this.paint = paint;
         this.paint.setAntiAlias(false);
     }
