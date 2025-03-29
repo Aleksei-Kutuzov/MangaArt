@@ -16,7 +16,14 @@
         <ImageView android:id="@+id/next" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1" android:background="#B8BBFE" android:fadingEdge="vertical" android:rotationY="180" app:srcCompat="@android:drawable/ic_menu_revert"/>
         <ImageView android:id="@+id/back" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1" android:background="#FF7E74" android:fadingEdge="vertical" app:srcCompat="@android:drawable/ic_menu_revert"/>
         <ImageView android:id="@+id/delete" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1" android:background="?android:attr/textColorLink" app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"/>
-        <Button android:id="@+id/save" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1" android:text="Сохранить"/>
+
+        <ImageView
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:tint="#000000"
+            app:srcCompat="@android:drawable/ic_menu_save" />
     </LinearLayout>
     <FrameLayout android:id="@+id/view" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" app:layout_constraintBottom_toTopOf="@+id/tableLayout3" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/linearLayout3"/>
     <TableLayout android:id="@+id/tableLayout3" android:layout_width="wrap_content" android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent">
